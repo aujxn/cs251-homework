@@ -1,0 +1,3 @@
+[submodule "hw1/prop"]
+	path = hw1/prop
+	url = https://github.com/slibby05/prop.git
