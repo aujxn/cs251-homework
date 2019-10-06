@@ -1,0 +1,234 @@
+\documentclass{exam}
+\usepackage{amsmath}
+\usepackage{hhline}
+\usepackage{url}
+
+\title{CS251 homework 1}
+\author{name:\underline{\hspace{2in}}}
+\date{Due: 10/8/19}
+
+% these are several symbols that I redefined to make formulas easier to read
+\def\land{\wedge}           % /\
+\def\lor{\vee}              % \/
+\def\lnot{\neg}             % -
+\def\liff{\leftrightarrow}  % <->
+\def\xor{\oplus}            % (+)
+\def\T{\top}                % T
+\def\F{\bot}                % _|_
+
+
+\begin{document}
+\maketitle
+
+
+\begin{questions}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Question 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\question
+Define variables, and write the following sentences as logical statements.\\
+
+\begin{itemize}
+    \item If it's not cloudy, then it's not raining. \vspace{3cm}
+    \item If we won the big game, then either we scored more points, or the other team didn't show up. \vspace{3cm}
+    \item This is a sentence. \vspace{3cm}
+    \item If you don't study for tests, then you won't pass the class.\vspace{3cm}
+    \item A graph is planer if it contains neither a minor of $K_{3,3}$ nor $K_5$.\vspace{3cm}
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Question 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question
+
+Draw truth tables for the following formulas.\\
+
+% I used the following code to draw a truth table
+% There are other ways, but this is probably the simplest.
+% Here array means we're making a 2d array on the page
+% |cc|c| means we'll have 3 column with vertical bars on the outside, 
+% and one before the last column
+% Each column is separates by &, and each line ends with \\.
+% Finally \hline makes a horizontal line across the entire table.
+%
+% I've given you guys the outline of the truth table, you just need to fill in the values
+
+%  \begin{array}{|cc|c|}
+%    \hline
+%    a  & b  & a \land b \\
+%    \hline
+%    \T & \T &    \T     \\
+%    \T & \F &    \F     \\
+%    \F & \T &    \F     \\
+%    \F & \F &    \F     \\
+%    \hline
+%  \end{array} 
+
+\noindent
+$a \xor b$
+$$
+\begin{array}{|c|c||c|}
+  \hline
+  a  & b  & a \xor b \\
+  \hline{|=|=||=|}
+     &    &          \\
+  \hline
+     &    &          \\
+  \hline
+     &    &          \\
+  \hline
+     &    &          \\
+  \hline
+\end{array} 
+$$
+$\lnot (\lnot a)$
+$$
+\begin{array}{|c||c|}
+  \hline
+  a  & \lnot (\lnot a) \\
+  \hhline{|=||=|}
+     &                 \\
+  \hline
+     &                 \\
+  \hline
+\end{array} 
+$$
+$\lnot b \to \lnot a$
+$$
+\begin{array}{|c|c||c|}
+  \hline
+  a  & b  & \lnot a \to \lnot b   \\
+  \hhline{|=|=||=|}
+     &    &                       \\
+  \hline
+     &    &                       \\
+  \hline
+     &    &                       \\
+  \hline
+     &    &                       \\
+  \hline
+\end{array} 
+$$
+$\lnot a \land \lnot b$
+$$
+\begin{array}{|c|c||c|}
+  \hline
+  a  & b  & \lnot a \land \lnot b \\
+  \hhline{|=|=||=|}
+     &    &                       \\
+  \hline
+     &    &                       \\
+  \hline
+     &    &                       \\
+  \hline
+     &    &                       \\
+  \hline
+\end{array} 
+$$
+$a \liff (b \liff c)$
+$$
+\begin{array}{|c|c|c||c|}
+  \hline
+  a  & b  & c  & a \liff (b \liff c) \\
+  \hhline{|=|=|=||=|}
+     &    &    &                     \\
+  \hline
+     &    &    &                     \\
+  \hline
+     &    &    &                     \\
+  \hline
+     &    &    &                     \\
+  \hline
+     &    &    &                     \\
+  \hline
+     &    &    &                     \\
+  \hline
+     &    &    &                     \\
+  \hline
+     &    &    &                     \\
+  \hline
+\end{array} 
+$$
+$(a \lor c) \land (b \lor c)$
+$$
+\begin{array}{|c|c|c||c|}
+  \hline
+  a  & b  & c  & (a \lor c) \land (b \lor c) \\
+  \hhline{|=|=|=||=|}
+     &    &    &                             \\
+  \hline
+     &    &    &                             \\
+  \hline
+     &    &    &                             \\
+  \hline
+     &    &    &                             \\
+  \hline
+     &    &    &                             \\
+  \hline
+     &    &    &                             \\
+  \hline
+     &    &    &                             \\
+  \hline
+     &    &    &                             \\
+  \hline
+\end{array} 
+$$
+
+\pagebreak
+\question
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Question 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Reduce the following to the shortest form.\\
+Determine if it's satisfiable, a tautology, or neither.
+\begin{itemize}
+    \item $(a \land \lnot b) \lor \lnot (\lnot a \lor b)$: \\
+        \vspace{4cm}
+    \item $a \land b \equiv \lnot (\lnot a \land \lnot b)$: \\ 
+        \vspace{4cm}
+    \item $a \land b \equiv \lnot (\lnot a \lor \lnot b)$: \\ 
+        \vspace{4cm}
+    \item $a \land (b \lor c) \to a \land (b \land c)$: \\ 
+        \vspace{4cm}
+\end{itemize}
+
+
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Question 4
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\question
+Draw ASTs for the following boolean expressions
+\begin{itemize}
+    \item $A \land B \to B \land C$ \vspace{4cm}
+    \item $A \to B \land B \to C$ \vspace{4cm}
+    \item $\lnot A \land B \lor C \to D$ \vspace{4cm}
+    \item $\lnot \lnot A \lor \lnot \lnot B$ \vspace{4cm}
+    \item $(A \to B) \lor (B \to A)$ \vspace{4cm}
+\end{itemize}
+
+
+\question
+
+Get the code for representing boolean expresions here:
+\url{https://github.com/slibby05/prop.git}.
+
+You'll notice that it doesn't work because the eval method isn't defined.
+You need to fix that.
+
+\question
+
+In the file hw1.py make the expressions from problem 4.\\
+$\ $\\
+Turn in hw1.py and AST.py to D2L.
+
+\end{questions}
+
+\end{document}
