@@ -1,0 +1,530 @@
+
+\documentclass[12pt,a4paper]{article}
+\usepackage{bussproofs}
+\usepackage{amsmath}
+
+\title{Proof Trees}
+\author{Steven Libby}
+\date{\vspace{-5ex}}
+
+% these are several symbols that I redefined to make formulas easier to read
+\def\land{\wedge}           % /\
+\def\lor{\vee}              % \/
+\def\lnot{\neg}             % -
+\def\liff{\leftrightarrow}  % <->
+\def\xor{\oplus}            % (+)
+\def\T{\top}                % T
+\def\F{\bot}                % _|_
+\def\proves{\vdash}         % |-
+
+% these are commands that use the bussproofs package.
+% they let you write tree style proofs.
+% you can get the package here:  https://www.math.ucsd.edu/~sbuss/ResearchWeb/bussproofs/bussproofs.sty
+
+\newcommand{\premise}    [1]{\AxiomC{#1}}
+\newcommand{\assumption} [1]{\AxiomC{[#1]}}
+\newcommand{\andI}       [1]{\RightLabel{$\land I$} \BinaryInfC{#1} }
+\newcommand{\andEL}      [1]{\RightLabel{$\land E1$}\UnaryInfC{#1}  }
+\newcommand{\andER}      [1]{\RightLabel{$\land E2$}\UnaryInfC{#1}  }
+\newcommand{\orIL}       [1]{\RightLabel{$\lor I1$} \UnaryInfC{#1}  }
+\newcommand{\orIR}       [1]{\RightLabel{$\lor I2$} \UnaryInfC{#1}  }
+\newcommand{\orE}        [1]{\RightLabel{$\lor E$}  \TrinaryInfC{#1}}
+\newcommand{\arrowI}     [1]{\RightLabel{$\to I$}   \BinaryInfC{#1} }
+\newcommand{\arrowE}     [1]{\RightLabel{$\to E$}   \BinaryInfC{#1} }
+\newcommand{\notE}       [1]{\RightLabel{$\lnot E$} \BinaryInfC{#1} }
+\newcommand{\notI}       [1]{\RightLabel{$\lnot I$} \UnaryInfC{#1}  }
+\newcommand{\FE}         [1]{\RightLabel{$\F E$}    \UnaryInfC{#1}  }
+\newcommand{\TI}         [1]{\RightLabel{$\T I$}    \UnaryInfC{#1}  }
+\newcommand{\LEM}        [1]{\RightLabel{$LEM$}     \UnaryInfC{#1}  }
+
+\begin{document}
+\maketitle
+
+This is meant to be a more complete explanation of proof trees.
+Proof Trees are a graphical format for formal proofs that eliminate the need to worry about getting references correct.
+I'll introduce the concept with several examples.
+
+The basic idea of a proof tree is pretty straightforward.
+If you can match all of the premises, then you can derive the conclusion.
+This leads to structures that look like the following.
+\begin{prooftree}
+    \premise{A}
+    \UnaryInfC{B}
+
+    \premise{C}
+    \premise{D}
+    \BinaryInfC{E}
+
+    \premise{A}
+    \UnaryInfC{B}
+    \premise{A}
+    \BinaryInfC{B}
+
+    \TrinaryInfC{F}
+\end{prooftree}
+
+
+Before we go any further, I need to explain a few terms.
+A \textbf{premise} is the expression above the bar in an inference rule.
+It is either something we were given, something we assumed, or something we derived.
+A \textbf{conclusion} is the expression below the bar in an inference rule.
+It was derived from premises.
+A \textbf{proof tree} is a tree made out of inference rules.
+The \textbf{leaves} of the proof tree are anything that isn't under a bar.
+A proof tree is \textbf{valid} if all of the leaves are given or assumed, and the premises of inference rules match the definition of the inference rules.
+Finally, a formula $A$ \textbf{matches} another formula $B$, if we can replace the variables in $B$ in such a way that $A = B$.
+
+\pagebreak
+\noindent
+Let's look at an example.
+Given the rule
+\begin{prooftree}
+  \premise{$A$}
+  \premise{$A \to B$}
+  \arrowE{$B$}
+\end{prooftree}
+prove:
+$A, A \to B, B \to C \proves C$.\\
+We can do this with the following proof
+\begin{prooftree}
+  \premise{$A$}
+  \premise{$A \to B$}
+  \arrowE{$B$}
+  \premise{$B \to C$}
+  \arrowE{$C$}
+\end{prooftree}
+
+Here $A$, $A \to B$, and $B \to C$ are \textit{premises},
+$C$ is the \textit{conclusion}, 
+The entire structure is the \textit{proof tree}, and $A$, $A \to B$, and $B \to C$ are \textit{leaves} in the tree
+(notice that there's no bar above them).
+It's clear that the upper left part of the proof tree \textit{matched} our $\to E$ rule.
+It's not as clear, however, that the lower use of $\to E$ matched.\\
+
+\noindent
+Matching is very important here, so I'll go over it with some examples.
+The simplest example is that any formula matches itself.\\
+$A \text{ matches } A$.\\
+
+\noindent
+Also any formula can be matched by a variable.\\
+$A \text{ matches } V$.\\
+$A \land B \text{ matches } V$.\\
+$A \to (B \land C) \text{ matches } V$.\\
+
+\noindent
+And finally, any formula $A$ matches a formula $B$ if their top level operators are the same, and their subformulas match.
+Again, this is easier to see by example.\\
+$(A \land B) \to C \text{ matches } D \to C$\\
+$A \land B \text{ matches } C \land D$\\
+$B \land A \text{ matches } A \land B$\\
+$(A \land B) \lor (C \land D) \text{ matches } (A \land B) \lor C$\\
+
+\noindent
+It's also important to know when a formula \textit{doesn't} match another one.\\
+$A \lor B \text{ doesn't match } A \land B$, because the $\land$ doesn't match $\lor$.\\
+$(A \to B) \to C \text{ doesn't match } A \to (B \to C)$.  \\
+While $A\to B \text{ matches } A$, $C \text{ doesn't match } B \to C$.\\
+
+\noindent
+Wrapping this all up: since we only used the $\to E$ rule, 
+all of our leaves were premises, and we matched the definition for every rule, our proof tree is \textit{valid}.
+
+\section{Proof Rules}
+Now that we have definitions, we need the inference rules.
+These are the rules I've been using for this class, although the ideas work with any set of inference rules.
+
+There are two types of rules here:
+Introduction rules, which add an operator (a symbol) into the formula,
+and Elimination rules, which take a formula with an operator and remove the operator.
+Introduction rules introduce something, and elimination rules eliminate something.\\
+ 
+\begin{tabular}{|ccc|}
+  \hline
+
+ & & \\
+  \premise{$A \land B$}
+  \andEL{$A$}
+  \DisplayProof &
+
+  \premise{$A \land B$}
+  \andER{$B$}
+  \DisplayProof &
+
+  \premise{$A$}
+  \premise{$B$}
+  \andI{$A \land B$}
+  \DisplayProof \\
+
+ & & \\
+
+  \premise{$A$}
+  \orIL{$A \lor B$}
+  \DisplayProof &
+
+  \premise{$B$}
+  \orIR{$A \lor B$}
+  \DisplayProof &
+
+  \premise{$A \lor B$}
+  \premise{$A \to C$}
+  \premise{$B \to C$}
+  \orE{$C$}
+  \DisplayProof \\
+
+ & & \\
+
+  \premise{$[A]$}
+  \premise{$[A]$}
+  \noLine
+  \UnaryInfC{\vdots}
+  \noLine
+  \UnaryInfC{$B$}
+  \arrowI{$A \to B$}
+  \DisplayProof &
+
+  &
+
+  \premise{$A$}
+  \premise{$A \to B$}
+  \arrowE{$B$}
+  \DisplayProof \\
+ 
+ & & \\
+
+  \premise{$A \to \F$}
+  \notI{$\lnot A$}
+  \DisplayProof &
+
+  \premise{$A$}
+  \premise{$\lnot A$}
+  \notE{$\F$}
+  \DisplayProof & \\
+
+ & & \\
+
+  \premise{$\ $}
+  \TI{$\T$}
+  \DisplayProof &
+
+  \premise{$\F$}
+  \FE{$A$}
+  \DisplayProof & 
+
+  \premise{$\ $}
+  \LEM{$A \lor \lnot A$}
+  \DisplayProof \\
+ & & \\
+  \hline
+\end{tabular}
+\\
+
+
+It is worth convincing yourself that these rules are correct.
+It's also worth finding the informal proof strategies that correcpond to these rules.
+For example: $\lnot I$ is a proof by contradiction.  We assumed $A$, and proved $\F$, so we know that our assumption of $A$ was wrong.
+
+\section{Proofs}
+A proof in propositional logic is a sequence of steps, where each step is an inference rule using conclusions from the previous steps.
+In the normal 3-column proofs, this means that you have to keep track of what line on which you reached a conclusion.
+Tree proofs eliminate this reference tracking.
+
+Now we'll work through a few simple proofs.
+I'll explain how the inference rules are used, 
+why they're valid proofs,
+and some general strategies for coming up with proofs.
+Unfortunately, this is not an algorithm for coming up with proofs.
+It can still be tricky to figure out which rules will be the most useful to check.
+
+\section{And Introduction and Elimination}
+We'll start off with one of the simpler examples of a proof,
+the commutativity of $\land$.
+The first thing to notice here is that we always have a \textit{goal} that we're trying to prove.
+Here the goal is $B \land A$, and it's good to keep this in mind.
+In fact, before we even start, we can write $B \land A$ at the bottom of the proof, since we know we have to prove it.
+
+\begin{prooftree}
+  \premise{$?$}
+  \premise{$?$}
+  \BinaryInfC{$B \land A$}
+\end{prooftree}
+
+At this point we could use one of five rules to get to $B \land A$.  $\land I, \land E1, \land E2, \lor E, \to E, \text{and} \F E$.
+We can not use any of the others, because their conclusions don't \textit{match} $B \land A$.
+We'll start with $\land I$, because that one looks promising.
+I know this because I've already done the proof.  Deciding which rules are good rules to check comes with practice.
+
+\begin{prooftree}
+  \premise{$B$}
+  \premise{$A$}
+  \andI{$B \land A$}
+\end{prooftree}
+
+Now, we're actually ready to finish the proof.
+It turns out that we have everything we need.
+All that's left is to get $A$ and $B$ from $A \land B$.
+We can do this with $\land E$.
+
+\begin{prooftree}
+  \premise{$A \land B$}
+  \andER{$B$}
+  \premise{$A \land B$}
+  \andEL{$A$}
+  \andI{$B \land A$}
+\end{prooftree}
+
+In this proof we used a couple of strategies that are good to keep in mind.\\
+\textbf{destruction-construction:} it's often the case that we can pull apart a formula into component parts with elimination rules.
+Then we can construct our new formula with introduction rules.\\
+\textbf{working backwards:} Since we know what the end result should be, it's often easier to start with that, and find which rules can apply.\\
+\textbf{eliminating bad paths:} Finding a proof for a theorem is a lot like solving a puzzle.  We need to find where all of the pieces fit.
+We can also get a lot of information by ruling out several pieces from our search.
+
+
+\section{Arrow Introduction}
+Arrow introduction is usually the rule people have problems with.
+It's really not that hard, but you have to be okay with assumptions.
+Assumptions work just like premises, but you can only use them in the arrow introduction branch.
+That is, if you have, 
+
+\begin{prooftree}
+  \assumption{$A$}
+  \premise{\vdots}
+  \noLine
+  \UnaryInfC{$B$}
+  \arrowI{$A \to B$}
+\end{prooftree}
+
+Then you can use the $[A]$ anywhere above the $\to I$ bar.
+At this point $[A]$ works just like a premise.
+Also note that $[A]$ is the only thing on the left hand side.
+This is just marking that $A$ is the variable that we're assuming to be true.
+To show how we can use this rule, let's revisit the proof we did earlier.\\
+$A, A \to B, B \to C \proves C$.\\
+However, let's make this an implication.\\
+$A \to B, B \to C \proves A \to C$.\\
+
+Since, we want to prove $A \to C$, then $\to I$ is probably our best choice.
+
+\begin{prooftree}
+  \assumption{$A$}
+  \premise{$?$}
+  \arrowI{$A \to C$}
+\end{prooftree}
+
+Now that we have assumed $A$, we can actually complete the proof just like we did before.
+We can use $A$ just like any other premise.
+We just need the extra step of assume $A$, and derive $C$.
+
+\begin{prooftree}
+  \assumption{$A$}
+
+    \assumption{$A$}
+    \premise{$A \to B$}
+    \arrowE{$B$}
+
+    \premise{$B \to C$}
+    \arrowE{$C$}
+
+  \arrowI{$A \to C$}
+\end{prooftree}
+
+\pagebreak
+\section{Or Elimination}
+
+The Or Elimination rule can be a little bit tricky.
+The rule itself says.
+\begin{prooftree}
+  \premise{$A \lor B$}
+  \premise{$A \to C$}
+  \premise{$B \to C$}
+  \orE{$C$}
+\end{prooftree}
+
+Where did $C$ come from?
+What does it mean?
+Well, Or Elimination is actually a common proof technique.
+It's proof by cases.\\
+If we have $A \lor B$, then we have two cases.\\
+Case 1: $A$ is true, so we show $A \to C$.\\
+Case 2: $B$ is true, so we show $B \to C$.\\
+Now, no matter which case is true, we know that we can conclude $C$.
+
+We use this to split up our proof into cases.
+We can use this on the following theorem.
+$A \lor B, B \to C, (A \land D) \to B, D \proves C$.
+
+We know immediately that our conclusion is going to have to be $C$, so we can start with that.
+We also already have $B \to C$, and $A \lor B$, so proof by cases looks like a good idea.
+
+\begin{prooftree}
+  \premise{$A \lor B$}
+
+  \premise{$?$}
+  \UnaryInfC{$A \to C$}
+  \premise{$B \to C$}
+  
+  \orE{$C$}
+\end{prooftree}
+
+Now we need to fill in the $A \to C$ branch.
+Remember, to get something of the form $A \to C$, we have to assume $A$, and prove $C$.
+
+\begin{prooftree}
+  \premise{$A \lor B$}
+
+  \assumption{$A$}
+  \premise{$?$}
+  \arrowI{$A \to C$}
+  \premise{$B \to C$}
+  
+  \orE{$C$}
+\end{prooftree}
+
+\pagebreak
+We don't have anything in our premises that lets us go from $A$ to $C$, so let's look for another route.
+We have a $B \to C$.  That look promising; let's try that.
+
+\begin{prooftree}
+  \premise{$A \lor B$}
+
+  \assumption{$A$}
+  \premise{$?$}
+  \UnaryInfC{$B$}
+  \premise{$B \to C$}
+  \arrowE{$C$}
+  \arrowI{$A \to C$}
+
+  \premise{$B \to C$}
+  
+  \orE{$C$}
+\end{prooftree}
+
+We're almost done here.  We just need to prove $B$.
+This isn't too hard, since we have $A, D,$ and $A \land D \to B$.
+
+\begin{prooftree}
+  \premise{$A \lor B$}
+
+  \assumption{$A$}
+
+  \assumption{$A$}
+  \premise{$D$}
+  \andI{$A\land D$}
+  \premise{$(A \land D) \to B$}
+  \arrowE{$B$}
+
+  \premise{$B \to C$}
+  \arrowE{$C$}
+  \arrowI{$A \to C$}
+
+  \premise{$B \to C$}
+  
+  \orE{$C$}
+\end{prooftree}
+
+You'll notice that proof by cases can grow pretty large.
+They also tend to be uncommon outside of contrived situations.
+The rules for $\lor I$ introduce a new variable (or expression) that is unrelated to the premise.
+This is unlikely to be useful in a proof unless you can introduce a variable related to other premises.
+However, proof by cases is very useful for dealing with the law of the excluded middle.
+
+\section{Law of the Excluded Middle}
+
+This is an odd rule to get a feel for.
+It can be used to prove some odd results, and it seems like we get an expression coming out of nowhere.
+LEM proofs also tend to be some of the trickiest proofs to come up with.
+I'd recommend trying this if you can't find another way to prove the result.
+It has no premise, and the $A$ in the conclusion can be anything, including $\F$.
+The reason that this ends up being consistent is because we actually get a pretty weak result.
+
+\begin{prooftree}
+  \premise{$\ $}
+  \LEM{$A \lor \lnot A$}
+\end{prooftree}
+
+Suppose we tried having the $A$ be $\F$.  Then we would have $\F \lor \lnot \F$, and $\lnot \F$ is $\T$, so it's still fine.
+In order to use this rule at all, we need to do a proof by cases.
+Let's try the following proof that double negation cancels out.
+
+$\lnot \lnot A \proves A$.
+
+This can be a tricky proof.
+It would be entirely reasonable to try to prove this with $\lnot E$ or $\F E$.
+However, you'll end up stuck trying to prove it either of these ways.
+So let's try a LEM proof.
+We know we have to use proof by cases with LEM, so let's get that set up.
+
+\begin{prooftree}
+
+  % LEM branch
+  \premise{$\ $}
+  \LEM{$A \lor \lnot A$}
+
+  % A -> A branch
+  \assumption{$A$}
+  \premise{$?$}
+  \arrowI{$A \to A$}
+
+  % start !A -> A branch
+  \assumption{$\lnot A$}
+  \premise{$?$}
+  \arrowI{$\lnot A \to A$}
+
+  \orE{$A$}
+\end{prooftree}
+
+Ok, so one of these branches is going to be pretty easy to fill in.
+We assumed $A$, so we can use that anywhere in that subproof.
+
+
+\begin{prooftree}
+
+  % LEM branch
+  \premise{$\ $}
+  \LEM{$A \lor \lnot A$}
+
+  % A -> A branch
+  \assumption{$A$}
+  \assumption{$A$}
+  \arrowI{$A \to A$}
+
+  % start !A -> A branch
+  \assumption{$\lnot A$}
+  \premise{$?$}
+  \arrowI{$\lnot A \to A$}
+
+  \orE{$A$}
+\end{prooftree}
+
+The rest of this isn't as clear, but it's not too bad.
+Remember we have $\lnot \lnot A$ as a premise, and we just assumed $\lnot A$.
+Or, to put that another way, we have $(\lnot A)$ and $\lnot (\lnot A)$.
+At this point we can use proof by contradiction ($\lnot E$) to finish the proof.
+
+\begin{prooftree}
+
+  % LEM branch
+  \premise{$\ $}
+  \LEM{$A \lor \lnot A$}
+
+  % A -> A branch
+  \assumption{$A$}
+    \assumption{$A$}
+  \arrowI{$A \to A$}
+
+  % start !A -> A branch
+  \assumption{$\lnot A$}
+
+    \assumption{$\lnot A$}
+    \premise{$\lnot \lnot A$}
+    \notE{$\F$}
+
+    \FE{$A$}
+
+  \arrowI{$\lnot A \to A$}
+
+  \orE{$A$}
+\end{prooftree}
+
+\end{document}
