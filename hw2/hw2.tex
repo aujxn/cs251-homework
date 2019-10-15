@@ -1,12 +1,142 @@
-\documentclass{exam}
-\usepackage{amsmath}
-\usepackage{hhline}
-\usepackage{url}
-\usepackage{bussproofs}
+\documentclass{article}
 
-\title{CS251 homework 2}
-\author{name:\underline{\hspace{2in}}}
-\date{Due: 10/15/19}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{fancybox}
+\usepackage{bussproofs}
+\usepackage{hhline}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Homework\ \#1}
+\newcommand{\hmwkDueDate}{October 8, 2019}
+\newcommand{\hmwkClass}{CS251}
+\newcommand{\hmwkClassTime}{Section A}
+\newcommand{\hmwkClassInstructor}{Steven Libby}
+\newcommand{\hmwkAuthorName}{\textbf{Austen Nelson}}
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 2:00pm}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+    \vspace{3in}
+}
+
+\author{\hmwkAuthorName}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
 
 % these are several symbols that I redefined to make formulas easier to read
 \def\land{\wedge}           % /\
@@ -37,114 +167,119 @@
 \newcommand{\DLL}        [1]{\RightLabel{$DL1$}     \UnaryInfC{#1}  }
 \newcommand{\DLR}        [1]{\RightLabel{$DL2$}     \UnaryInfC{#1}  }
 \newcommand{\notNotE}    [1]{\RightLabel{$\lnot \lnot E$} \UnaryInfC{#1} }
-
-
-
 \begin{document}
+
 \maketitle
 
-\begin{questions}
-% we can write proofs by just writing the inference rules
-% for example we can write the proof
+\pagebreak
 
-% A /\ B       A /\ B
-% ------/\E1  --------/\E2
-%   B            A
-%   -------------- /\I
-%       B /\ A
-
-% as
-%
-% \begin{prooftree}
-%   \premise{$A \land B$}
-%   \andER{$B$}
-%
-%   \premise{$A \land B$}
-%   \andEL{$A$}
-%
-%   \andI{$B \land A$}
-% \end{prooftree}
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Question 1
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\question
+\begin{homeworkProblem}
     last week we showed that nand $\odot$ is a universal operator.
     That is, we can write all operators in terms of nand.
     Show that $\to$ is a universal operator by writing $\lnot, \land,$ and $\lor$
     with only $\to$.
 
-\pagebreak
+    \begin{itemize}
+       \item $A \to \bot = \lnot A$
+       \item $(A \to \bot) \to B = A \land B$
+       \item $(A \to B) \to B = A \lor B$
+    \end{itemize}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Question 2
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\question
-Convert the following into CNF
+\end{homeworkProblem}
 
-    \begin{parts}
-\part $(c \land a) \lor (b \land c)$ \\
+\begin{homeworkProblem}
+   Convert the following to CNF
 
-    \vspace{5cm}
+   \textbf{Part One}\\
+   $(c \land a) \lor (b \land c)$ \\
+   $(c \lor b) \land (a \lor b) \land (a \lor c)$ \\
 
-\part $(a \land \lnot a) \lor (b \land \lnot b)$\\
+   \textbf{Part Two}\\
+   $(a \land \lnot a) \lor (b \land \lnot b)$\\
+   $\bot$
 
-    \vspace{5cm}
+   \textbf{Part Three}\\
+   $a \to (b \equiv c)$\\
 
-\part $a \to (b \equiv c)$ \\
+   \textbf{Part Four}\\
+   $(a \to b) \land (b \to c)$ \\
 
-    \vspace{5cm}
+   \textbf{Part Five}\\
+   $\lnot (a \lor b)$ \\
 
-\part $(a \to b) \land (b \to c)$ \\
+   \textbf{Part Six}\\
+   $(a \equiv b) \equiv c$ \\
 
-    \vspace{5cm}
+\end{homeworkProblem}
 
+\begin{homeworkProblem}
+   Prove the following: \\
 
-\part $\lnot (a \lor b)$ \\
+   \textbf{Part One}\\
+    $a \lor b \proves b \lor a$: \\
 
-    \vspace{5cm}
+\begin{prooftree}
+   \premise{$A \lor B$}
+  \assumption{$A$}
+  \assumption{$A$}
+  \orIR{$B \lor A$}
+  \arrowI{$A \to B \lor A$}
+   \assumption{$B$}
+   \assumption{$B$}
+   \orIL{$B \lor A$}
+   \arrowI{$B \to B \lor A$}
+   \orE{$B \lor A$}
+\end{prooftree}
 
-\part $(a \equiv b) \equiv c$ \\
+   \textbf{Part Two}\\
+    $(a \lor b), \lnot b \proves a$: \\ 
 
-    \vspace{5cm}
+\begin{prooftree}
+   \premise{$A \lor B$}
+   \assumption{$A$}
+   \assumption{$A$}
+   \arrowI{$A \to A$}
+   \assumption{$B$}
+   \assumption{$B$}
+   \premise{$\lnot B$}
+   \notE{$\bot$}
+   \FE{$A$}
+   \arrowI{$B \to A$}
+   \orE{$A$}
+\end{prooftree}
 
-\end{parts}
+   \textbf{Part Three}\\
+    $\lnot a \lor \lnot b \proves \lnot (a \land b)$: \\
 
+\begin{prooftree}
+   \premise{$\lnot A \lor \lnot B$}
+   \assumption{$\lnot A$}
+   \assumption{$A \land B$}
+   \assumption{$\lnot A$}
+   \assumption{$A \land B$}
+   \andER{$A$}
+   \notE{$\bot$}
+   \arrowI{$A \land B \to \bot$}
+   \notI{$\lnot (A \land B)$}
+   \arrowI{$\lnot A \to \lnot (A \land B)$}
+   \assumption{$\lnot B$}
+   \assumption{$A \land B$}
+   \assumption{$\lnot B$}
+   \assumption{$A \land B$}
+   \andEL{$B$}
+   \notE{$\bot$}
+   \arrowI{$A \land B \to \bot$}
+   \notI{$\lnot (A \land B)$}
+   \arrowI{$\lnot B \to \lnot (A \land B)$}
+   \orE{$\lnot (A \land B)$}
+   \
+\end{prooftree}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Question 3
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\question
-Prove the following theorems using inference rules from lecture 3.
-After you're done proving these, check them with the proof checker from class.\\
-\url{https://github.com/slibby05/proofs}\\
-Put these proof in hw2.py file, and turn that in on D2L.
+   \textbf{Part Four}\\
+    DL1: $\lnot(\lnot a \lor \lnot b) \proves a$
 
-\begin{parts}
-    \part $a \lor b \proves b \lor a$: \\
-    
-    \vspace{6cm}
-
-    \pagebreak
-    \part $(a \lor b), \lnot b \proves a$: \\ 
-
-    \vspace{6cm}
-
-
-    \part $\lnot a \lor \lnot b \proves \lnot (a \land b)$: \\
-
-    \vspace{6cm}
-
-    \part DL1: $\lnot(\lnot a \lor \lnot b) \proves a$
-
-    \vspace{6cm}
-
-
-    \pagebreak
-    \part $\lnot(a \land b) \proves \lnot a \lor \lnot b$: \\
+   \textbf{Part Five}\\
+    $\lnot(a \land b) \proves \lnot a \lor \lnot b$: \\
           (Hint: you can use the previous problem, and a theorem from class.\\
           \begin{tabular}{ccc}
               \premise{$\lnot(\lnot a \lor \lnot b)$}
@@ -158,9 +293,6 @@ Put these proof in hw2.py file, and turn that in on D2L.
               \DisplayProof \\
           \end{tabular}
 
-    \vspace{4in}
+\end{homeworkProblem}
 
-\end{parts}
-
-\end{questions}
 \end{document}

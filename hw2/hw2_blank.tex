@@ -1,0 +1,166 @@
+\documentclass{exam}
+\usepackage{amsmath}
+\usepackage{hhline}
+\usepackage{url}
+\usepackage{bussproofs}
+
+\title{CS251 homework 2}
+\author{name:\underline{\hspace{2in}}}
+\date{Due: 10/15/19}
+
+% these are several symbols that I redefined to make formulas easier to read
+\def\land{\wedge}           % /\
+\def\lor{\vee}              % \/
+\def\lnot{\neg}             % -
+\def\liff{\leftrightarrow}  % <->
+\def\xor{\oplus}            % (+)
+\def\T{\top}                % T
+\def\F{\bot}                % _|_
+\def\proves{\vdash}         % |-
+
+
+\newcommand{\premise}    [1]{\AxiomC{#1}}
+\newcommand{\assumption} [1]{\AxiomC{[#1]}}
+\newcommand{\andI}       [1]{\RightLabel{$\land I$} \BinaryInfC{#1} }
+\newcommand{\andEL}      [1]{\RightLabel{$\land E1$}\UnaryInfC{#1}  }
+\newcommand{\andER}      [1]{\RightLabel{$\land E2$}\UnaryInfC{#1}  }
+\newcommand{\orIL}       [1]{\RightLabel{$\lor I1$} \UnaryInfC{#1}  }
+\newcommand{\orIR}       [1]{\RightLabel{$\lor I2$} \UnaryInfC{#1}  }
+\newcommand{\orE}        [1]{\RightLabel{$\lor E$}  \TrinaryInfC{#1}}
+\newcommand{\arrowI}     [1]{\RightLabel{$\to I$}   \BinaryInfC{#1} }
+\newcommand{\arrowE}     [1]{\RightLabel{$\to E$}   \BinaryInfC{#1} }
+\newcommand{\notE}       [1]{\RightLabel{$\lnot E$} \BinaryInfC{#1} }
+\newcommand{\notI}       [1]{\RightLabel{$\lnot I$} \UnaryInfC{#1}  }
+\newcommand{\FE}         [1]{\RightLabel{$\F E$}    \UnaryInfC{#1}  }
+\newcommand{\TI}         [1]{\RightLabel{$\T I$}    \UnaryInfC{#1}  }
+\newcommand{\LEM}        [1]{\RightLabel{$LEM$}     \UnaryInfC{#1}  }
+\newcommand{\DLL}        [1]{\RightLabel{$DL1$}     \UnaryInfC{#1}  }
+\newcommand{\DLR}        [1]{\RightLabel{$DL2$}     \UnaryInfC{#1}  }
+\newcommand{\notNotE}    [1]{\RightLabel{$\lnot \lnot E$} \UnaryInfC{#1} }
+
+
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+% we can write proofs by just writing the inference rules
+% for example we can write the proof
+
+% A /\ B       A /\ B
+% ------/\E1  --------/\E2
+%   B            A
+%   -------------- /\I
+%       B /\ A
+
+% as
+%
+% \begin{prooftree}
+%   \premise{$A \land B$}
+%   \andER{$B$}
+%
+%   \premise{$A \land B$}
+%   \andEL{$A$}
+%
+%   \andI{$B \land A$}
+% \end{prooftree}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Question 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question
+    last week we showed that nand $\odot$ is a universal operator.
+    That is, we can write all operators in terms of nand.
+    Show that $\to$ is a universal operator by writing $\lnot, \land,$ and $\lor$
+    with only $\to$.
+
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Question 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question
+Convert the following into CNF
+
+    \begin{parts}
+\part $(c \land a) \lor (b \land c)$ \\
+
+    \vspace{5cm}
+
+\part $(a \land \lnot a) \lor (b \land \lnot b)$\\
+
+    \vspace{5cm}
+
+\part $a \to (b \equiv c)$ \\
+
+    \vspace{5cm}
+
+\part $(a \to b) \land (b \to c)$ \\
+
+    \vspace{5cm}
+
+
+\part $\lnot (a \lor b)$ \\
+
+    \vspace{5cm}
+
+\part $(a \equiv b) \equiv c$ \\
+
+    \vspace{5cm}
+
+\end{parts}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Question 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question
+Prove the following theorems using inference rules from lecture 3.
+After you're done proving these, check them with the proof checker from class.\\
+\url{https://github.com/slibby05/proofs}\\
+Put these proof in hw2.py file, and turn that in on D2L.
+
+\begin{parts}
+    \part $a \lor b \proves b \lor a$: \\
+    
+    \vspace{6cm}
+
+    \pagebreak
+    \part $(a \lor b), \lnot b \proves a$: \\ 
+
+    \vspace{6cm}
+
+
+    \part $\lnot a \lor \lnot b \proves \lnot (a \land b)$: \\
+
+    \vspace{6cm}
+
+    \part DL1: $\lnot(\lnot a \lor \lnot b) \proves a$
+
+    \vspace{6cm}
+
+
+    \pagebreak
+    \part $\lnot(a \land b) \proves \lnot a \lor \lnot b$: \\
+          (Hint: you can use the previous problem, and a theorem from class.\\
+          \begin{tabular}{ccc}
+              \premise{$\lnot(\lnot a \lor \lnot b)$}
+              \DLL{$a$}
+              \DisplayProof &
+              \premise{$\lnot(\lnot a \lor \lnot b)$}
+              \DLR{$b$}
+              \DisplayProof &
+              \premise{$\lnot\lnot a$}
+              \notNotE{$a$}
+              \DisplayProof \\
+          \end{tabular}
+
+    \vspace{4in}
+
+\end{parts}
+
+\end{questions}
+\end{document}
