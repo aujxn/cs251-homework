@@ -89,8 +89,8 @@
 %   - Author
 %
 
-\newcommand{\hmwkTitle}{Homework\ \#1}
-\newcommand{\hmwkDueDate}{October 8, 2019}
+\newcommand{\hmwkTitle}{Homework\ \#2}
+\newcommand{\hmwkDueDate}{October 15, 2019}
 \newcommand{\hmwkClass}{CS251}
 \newcommand{\hmwkClassTime}{Section A}
 \newcommand{\hmwkClassInstructor}{Steven Libby}
@@ -191,24 +191,53 @@
    Convert the following to CNF
 
    \textbf{Part One}\\
-   $(c \land a) \lor (b \land c)$ \\
-   $(c \lor b) \land (a \lor b) \land (a \lor c)$ \\
+   \begin{align*}
+      (c \land a) \lor (b \land c) &&\\
+      (c \lor b) \land (c \lor c) \land (a \lor b) \land (a \lor c) && FOIL_{\lor}
+   \end{align*}
 
    \textbf{Part Two}\\
-   $(a \land \lnot a) \lor (b \land \lnot b)$\\
-   $\bot$
+   \begin{align*}
+      (a \land \lnot a) \lor (b \land \lnot b)     &&\\
+      \bot \lor \bot                               && CTR*2\\
+      \bot                                         && Item_{\lor}
+   \end{align*}
 
    \textbf{Part Three}\\
-   $a \to (b \equiv c)$\\
+   \begin{align*}
+      a \to (b \equiv c) &&\\
+      a \to ((b \to c) \land (c \to b)) && Def_{\equiv}\\
+      \lnot a \lor ((\lnot b \lor c) \land (\lnot c \lor b)) && Imp*3\\
+      (\lnot a \lor \lnot b \lor c) \land (\lnot a \lor \lnot c \lor b) && Dis_{\lor}
+   \end{align*}
 
    \textbf{Part Four}\\
-   $(a \to b) \land (b \to c)$ \\
+   \begin{align*}
+      (a \to b) \land (b \to c)                    &&\\
+      (\lnot a \lor b) \land (\lnot b \lor c)      && Imp*2
+   \end{align*}
 
    \textbf{Part Five}\\
-   $\lnot (a \lor b)$ \\
+   \begin{align*}
+      \lnot (a \lor b) &&\\
+      \lnot a \land \lnot b && DM_{\lor}
+   \end{align*}
 
    \textbf{Part Six}\\
-   $(a \equiv b) \equiv c$ \\
+   \begin{align*}
+      (a \equiv b) \equiv c         &&\\
+      (((a \to b) \land (b \to a)) \to c) \land (c \to ((a \to b) \land (b \to a))) && Def_{\equiv}\\
+      (\lnot ((\lnot a \lor b) \land (\lnot b \lor a)) \lor c) \land (\lnot c \lor ((\lnot a \lor b) \land (\lnot b \lor a)))
+      && Imp*6\\
+      ((a \land \lnot b) \lor (b \land \lnot a) \lor c) \land (\lnot c \lor ((\lnot a \lor b) \land (\lnot b \lor a)))
+      && DM_{\land}, \; DM_{\lor}*2\\
+      (((a \lor b) \land (a \lor \lnot a) \land (\lnot b \lor b) \land (\lnot b \lor \lnot a)) \lor c) \land
+      (\lnot c \lor ((\lnot a \lor b) \land (\lnot b \lor a))) && FOIL_{\lor}\\
+      ((c \lor a \lor b) \land (c \lor a \lor \lnot a) \land (c \lor \lnot b \lor b) \land (c \lor \lnot b \lor \lnot a)) \land
+      (\lnot c \lor \lnot a \lor b) \land (\lnot c \lor \lnot b \lor a) && Dis_{\lor}*5\\
+      (c \lor a \lor b) \land (c \lor \lnot b \lor \lnot a) \land (\lnot c \lor \lnot a \lor b) \land (\lnot c \lor \lnot b \lor a)
+      && LEM*2, \; Anul_{\lor}*2
+   \end{align*}
 
 \end{homeworkProblem}
 
@@ -280,7 +309,7 @@
 
    \textbf{Part Five}\\
     $\lnot(a \land b) \proves \lnot a \lor \lnot b$: \\
-          (Hint: you can use the previous problem, and a theorem from class.\\
+          (Hint: you can use the previous problem, and a theorem from class.)\\
           \begin{tabular}{ccc}
               \premise{$\lnot(\lnot a \lor \lnot b)$}
               \DLL{$a$}
