@@ -301,26 +301,74 @@
    \notI{$\lnot (A \land B)$}
    \arrowI{$\lnot B \to \lnot (A \land B)$}
    \orE{$\lnot (A \land B)$}
-   \
 \end{prooftree}
 
    \textbf{Part Four}\\
     DL1: $\lnot(\lnot a \lor \lnot b) \proves a$
 
+\begin{prooftree}
+   \premise{$\ $}
+   \LEM{$A \lor \lnot A$}
+   \assumption{$A$}
+   \assumption{$A$}
+   \arrowI{$A \to A$}
+   \assumption{$\lnot A$}
+   \assumption{$\lnot A$}
+   \orIR{$\lnot A \lor \lnot B$}
+   \assumption{$\lnot A \lor \lnot B$}
+   \assumption{$\lnot A \lor \lnot B$}
+   \premise{$\lnot (\lnot A \lor \lnot B)$}
+   \notE{$\bot$}
+   \FE{$A$}
+   \arrowI{$\lnot A \lor \lnot B \to A$}
+   \arrowE{$A$}
+   \arrowI{$\lnot A \to A$}
+   \orE{$A$}
+\end{prooftree}
+
+
    \textbf{Part Five}\\
     $\lnot(a \land b) \proves \lnot a \lor \lnot b$: \\
-          (Hint: you can use the previous problem, and a theorem from class.)\\
-          \begin{tabular}{ccc}
-              \premise{$\lnot(\lnot a \lor \lnot b)$}
-              \DLL{$a$}
-              \DisplayProof &
-              \premise{$\lnot(\lnot a \lor \lnot b)$}
-              \DLR{$b$}
-              \DisplayProof &
-              \premise{$\lnot\lnot a$}
-              \notNotE{$a$}
-              \DisplayProof \\
-          \end{tabular}
+
+\begin{prooftree}
+   \assumption{$A$}
+   \premise{$\ $}
+   \LEM{$B \lor \lnot B$}
+   \assumption{$B$}
+   \assumption{$A$}
+   \assumption{$B$}
+   \andI{$A \land B$}
+   \premise{$\lnot (A \land B)$}
+   \notE{$\bot$}
+   \FE{$\lnot A \lor \lnot B$}
+   \arrowI{$B \to \lnot A \lor \lnot B$}
+   \assumption{$\lnot B$}
+   \assumption{$\lnot B$}
+   \orIL{$\lnot A \lor \lnot B$}
+   \arrowI{$\lnot B \to \lnot A \lor \lnot B$}
+   \orE{$\lnot A \lor \lnot B$}
+   \arrowI{$A \to \lnot A \lor \lnot B$}
+  \noLine
+  \UnaryInfC{\vdots}
+  \noLine
+  \UnaryInfC{\vdots}
+\end{prooftree}
+
+\begin{prooftree}
+   \premise{$\ $}
+   \LEM{$A \lor \lnot A$}
+   \premise{\vdots}
+   \noLine
+   \UnaryInfC{\vdots}
+   \noLine
+   \UnaryInfC{$A \to \lnot A \lor \lnot B$}
+   \assumption{$\lnot A$}
+   \assumption{$\lnot A$}
+   \orIR{$\lnot A \lor \lnot B$}
+   \arrowI{$\lnot A \to \lnot A \lor \lnot B$}
+   \orE{$\lnot A \lor \lnot B$}
+\end{prooftree}
+
 
 \end{homeworkProblem}
 
