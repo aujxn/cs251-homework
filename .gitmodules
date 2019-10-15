@@ -3,4 +3,4 @@
 	url = https://github.com/aujxn/prop.git
 [submodule "hw2/proofs"]
 	path = hw2/proofs
-	url = https://github.com/slibby05/proofs
+	url = https://github.com/aujxn/proofs.git
