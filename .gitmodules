@@ -4,3 +4,6 @@
 [submodule "hw2/proofs"]
 	path = hw2/proofs
 	url = https://github.com/aujxn/proofs.git
+[submodule "hw3/pred"]
+	path = hw3/pred
+	url = git@github.com:aujxn/pred
