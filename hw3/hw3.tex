@@ -3,6 +3,7 @@
 \usepackage{fancyhdr}
 \usepackage{extramarks}
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{amsfonts}
 \usepackage{tikz}
@@ -86,12 +87,12 @@
 %   - Author
 %
 
-\newcommand{\hmwkTitle}{Homework\ \#2}
-\newcommand{\hmwkDueDate}{February 12, 2014}
-\newcommand{\hmwkClass}{Calculus}
+\newcommand{\hmwkTitle}{Homework \#3}
+\newcommand{\hmwkDueDate}{October 29, 2019}
+\newcommand{\hmwkClass}{CS251}
 \newcommand{\hmwkClassTime}{Section A}
-\newcommand{\hmwkClassInstructor}{Professor Isaac Newton}
-\newcommand{\hmwkAuthorName}{\textbf{Josh Davis} \and \textbf{Davis Josh}}
+\newcommand{\hmwkClassInstructor}{Steven Libby}
+\newcommand{\hmwkAuthorName}{Austen Nelson}
 
 %
 % Title Page
@@ -142,398 +143,125 @@
 \pagebreak
 
 \begin{homeworkProblem}
-    Give an appropriate positive constant \(c\) such that \(f(n) \leq c \cdot
-    g(n)\) for all \(n > 1\).
+   Convert the following into first order predicate calculus:
 
-    \begin{enumerate}
-        \item \(f(n) = n^2 + n + 1\), \(g(n) = 2n^3\)
-        \item \(f(n) = n\sqrt{n} + n^2\), \(g(n) = n^2\)
-        \item \(f(n) = n^2 - n + 1\), \(g(n) = n^2 / 2\)
-    \end{enumerate}
+   \begin{itemize}
+   \item For any two real numbers, there is a real number between them.\\
+   $\forall x, y \in \mathbb{R}.\exists z \in \mathbb{R}.x<z<y \lor x>z>y$
 
-    \textbf{Solution}
+   \item A natural number is prime if, and only if, it has no divisors other than 1 and itself.\\
+      $\forall p \in \mathbb{N}. p \in P \iff (\nexists d \in \{x \in \mathbb{N} \mid x \neq p \land x \neq 1\}.d \mid p)$
 
-    We solve each solution algebraically to determine a possible constant
-    \(c\).
-    \\
+   \item A Language is Turing Complete if it can encode Turing Machines $L = TM$.
+      There is a compiler between any two Turing Complete languages.\\
+      L is the set of all languages.\\
+         $\forall x,y \in L. TuringComp(x) \land TuringComp(y) \to (\exists f: x \to y)$
 
-    \textbf{Part One}
+   \item The set of closed balls in $n$ dimensional space is $B^n$.
+      A fixed point is a point that doesn't change after applying a function.
+      Any continuous function on a closed ball has at least one fixed point.\\
+         $\forall n \in \mathbb{N}. \forall f: B^n \to B^n. Continuous(f) \to (\exists b \in B^n. b \equiv f(b))$
 
-    \[
-        \begin{split}
-            n^2 + n + 1 &=
-            \\
-            &\leq n^2 + n^2 + n^2
-            \\
-            &= 3n^2
-            \\
-            &\leq c \cdot 2n^3
-        \end{split}
-    \]
+   \item Every planer graph is 4-colorable.\\
+      $\forall g \in Graphs. Planer(g) \to Colorable(g, 4)$
+   \end{itemize}
 
-    Thus a valid \(c\) could be when \(c = 2\).
-    \\
-
-    \textbf{Part Two}
-
-    \[
-        \begin{split}
-            n^2 + n\sqrt{n} &=
-            \\
-            &= n^2 + n^{3/2}
-            \\
-            &\leq n^2 + n^{4/2}
-            \\
-            &= n^2 + n^2
-            \\
-            &= 2n^2
-            \\
-            &\leq c \cdot n^2
-        \end{split}
-    \]
-
-    Thus a valid \(c\) is \(c = 2\).
-    \\
-
-    \textbf{Part Three}
-
-    \[
-        \begin{split}
-            n^2 - n + 1 &=
-            \\
-            &\leq n^2
-            \\
-            &\leq c \cdot n^2/2
-        \end{split}
-    \]
-
-    Thus a valid \(c\) is \(c = 2\).
-
-\end{homeworkProblem}
-
-\pagebreak
-
-\begin{homeworkProblem}
-    Let \(\Sigma = \{0, 1\}\). Construct a DFA \(A\) that recognizes the
-    language that consists of all binary numbers that can be divided by 5.
-    \\
-
-    Let the state \(q_k\) indicate the remainder of \(k\) divided by 5. For
-    example, the remainder of 2 would correlate to state \(q_2\) because \(7
-    \mod 5 = 2\).
-
-    \begin{figure}[h]
-        \centering
-        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-            \node[state, accepting, initial] (q_0)   {$q_0$};
-            \node[state] (q_1) [right=of q_0] {$q_1$};
-            \node[state] (q_2) [right=of q_1] {$q_2$};
-            \node[state] (q_3) [right=of q_2] {$q_3$};
-            \node[state] (q_4) [right=of q_3] {$q_4$};
-            \path[->]
-                (q_0)
-                    edge [loop above] node {0} (q_0)
-                    edge node {1} (q_1)
-                (q_1)
-                    edge node {0} (q_2)
-                    edge [bend right=-30] node {1} (q_3)
-                (q_2)
-                    edge [bend left] node {1} (q_0)
-                    edge [bend right=-30] node {0} (q_4)
-                (q_3)
-                    edge node {1} (q_2)
-                    edge [bend left] node {0} (q_1)
-                (q_4)
-                    edge node {0} (q_3)
-                    edge [loop below] node {1} (q_4);
-        \end{tikzpicture}
-        \caption{DFA, \(A\), this is really beautiful, ya know?}
-        \label{fig:multiple5}
-    \end{figure}
-
-    \textbf{Justification}
-    \\
-
-    Take a given binary number, \(x\). Since there are only two inputs to our
-    state machine, \(x\) can either become \(x0\) or \(x1\). When a 0 comes
-    into the state machine, it is the same as taking the binary number and
-    multiplying it by two. When a 1 comes into the machine, it is the same as
-    multipying by two and adding one.
-    \\
-
-    Using this knowledge, we can construct a transition table that tell us
-    where to go:
-
-    \begin{table}[ht]
-        \centering
-        \begin{tabular}{c || c | c | c | c | c}
-            & \(x \mod 5 = 0\)
-            & \(x \mod 5 = 1\)
-            & \(x \mod 5 = 2\)
-            & \(x \mod 5 = 3\)
-            & \(x \mod 5 = 4\)
-            \\
-            \hline
-            \(x0\) & 0 & 2 & 4 & 1 & 3 \\
-            \(x1\) & 1 & 3 & 0 & 2 & 4 \\
-        \end{tabular}
-    \end{table}
-
-    Therefore on state \(q_0\) or (\(x \mod 5 = 0\)), a transition line should
-    go to state \(q_0\) for the input 0 and a line should go to state \(q_1\)
-    for input 1. Continuing this gives us the Figure~\ref{fig:multiple5}.
 \end{homeworkProblem}
 
 \begin{homeworkProblem}
-    Write part of \alg{Quick-Sort($list, start, end$)}
+   Restate the following in english:
 
-    \begin{algorithm}[]
-        \begin{algorithmic}[1]
-            \Function{Quick-Sort}{$list, start, end$}
-                \If{$start \geq end$}
-                    \State{} \Return{}
-                \EndIf{}
-                \State{} $mid \gets \Call{Partition}{list, start, end}$
-                \State{} \Call{Quick-Sort}{$list, start, mid - 1$}
-                \State{} \Call{Quick-Sort}{$list, mid + 1, end$}
-            \EndFunction{}
-        \end{algorithmic}
-        \caption{Start of QuickSort}
-    \end{algorithm}
+   \begin{itemize}
+   \item $\forall n,a,b \in \mathbb{N}.n\mid a \land n \mid b \to \exists x,y \in \mathbb{N}.n \mid ax+by$\\
+      For every three natural numbers, if one divides the other two, there are two natural scalars that scale the
+      dividends  such that the divisor divides the sum of the scaled values.
+
+   \item $\forall n \in \mathbb{N}. n > 2 \to (\nexists a, b, c \in \mathbb{N}. a^n + b^n = c^n)$\\
+      Fermat's last theorem. There are no natural solutions that satisfy $a^n + b^n = c^n$ larger than $n = 2$ for
+      every natural $a,b,c$.
+
+   \item $\nexists p, q \in \mathbb{N}. \frac{p}{q}^2 \neq 2$\\
+      The square root of two is not a rational number.
+
+   \item $\exists x \in \mathbb{R}. x^2 + 1 = 0$\\
+      There is a real number that is also imaginary.
+
+   \end{itemize}
 \end{homeworkProblem}
-
-\pagebreak
 
 \begin{homeworkProblem}
-    Suppose we would like to fit a straight line through the origin, i.e.,
-    \(Y_i = \beta_1 x_i + e_i\) with \(i = 1, \ldots, n\), \(\E [e_i] = 0\),
-    and \(\Var [e_i] = \sigma^2_e\) and \(\Cov[e_i, e_j] = 0, \forall i \neq
-    j\).
-    \\
+   Determine if the following are well formed (legal). P is a predicate with arity 3, Q is a predicate with arity 2,
+   and $f$ is a function with arity 2, and g is a function with arity 1. The only domain is $\mathbb{N}$.
 
-    \part
+   \begin{itemize}
+      \item $\forall x.P(f(x, x), g(x), x) = x$\\
+         No, predicate P is a true or false value and cannot be compared to x, a natural.
 
-    Find the least squares esimator for \(\hat{\beta_1}\) for the slope
-    \(\beta_1\).
-    \\
+      \item $\forall x.(\exists y.Q(x,y) \land P(x,y,z)) \to f(x,y) = g(x)$\\
+         Well formed. Both sides of the implication evaluate to a boolean value.
 
-    \solution
+      \item $\nexists y.y = f(y,y)$\\
+         Well formed.
 
-    To find the least squares estimator, we should minimize our Residual Sum
-    of Squares, RSS:
+      \item $\forall x,y,z.P(x, y, z) \to Q(x,y,z)$\\
+         No, Q has an arity of 2.
 
-    \[
-        \begin{split}
-            RSS &= \sum_{i = 1}^{n} {(Y_i - \hat{Y_i})}^2
-            \\
-            &= \sum_{i = 1}^{n} {(Y_i - \hat{\beta_1} x_i)}^2
-        \end{split}
-    \]
-
-    By taking the partial derivative in respect to \(\hat{\beta_1}\), we get:
-
-    \[
-        \pderiv{
-            \hat{\beta_1}
-        }{RSS}
-        = -2 \sum_{i = 1}^{n} {x_i (Y_i - \hat{\beta_1} x_i)}
-        = 0
-    \]
-
-    This gives us:
-
-    \[
-        \begin{split}
-            \sum_{i = 1}^{n} {x_i (Y_i - \hat{\beta_1} x_i)}
-            &= \sum_{i = 1}^{n} {x_i Y_i} - \sum_{i = 1}^{n} \hat{\beta_1} x_i^2
-            \\
-            &= \sum_{i = 1}^{n} {x_i Y_i} - \hat{\beta_1}\sum_{i = 1}^{n} x_i^2
-        \end{split}
-    \]
-
-    Solving for \(\hat{\beta_1}\) gives the final estimator for \(\beta_1\):
-
-    \[
-        \begin{split}
-            \hat{\beta_1}
-            &= \frac{
-                \sum {x_i Y_i}
-            }{
-                \sum x_i^2
-            }
-        \end{split}
-    \]
-
-    \pagebreak
-
-    \part
-
-    Calculate the bias and the variance for the estimated slope
-    \(\hat{\beta_1}\).
-    \\
-
-    \solution
-
-    For the bias, we need to calculate the expected value
-    \(\E[\hat{\beta_1}]\):
-
-    \[
-        \begin{split}
-            \E[\hat{\beta_1}]
-            &= \E \left[ \frac{
-                \sum {x_i Y_i}
-            }{
-                \sum x_i^2
-            }\right]
-            \\
-            &= \frac{
-                \sum {x_i \E[Y_i]}
-            }{
-                \sum x_i^2
-            }
-            \\
-            &= \frac{
-                \sum {x_i (\beta_1 x_i)}
-            }{
-                \sum x_i^2
-            }
-            \\
-            &= \frac{
-                \sum {x_i^2 \beta_1}
-            }{
-                \sum x_i^2
-            }
-            \\
-            &= \beta_1 \frac{
-                \sum {x_i^2 \beta_1}
-            }{
-                \sum x_i^2
-            }
-            \\
-            &= \beta_1
-        \end{split}
-    \]
-
-    Thus since our estimator's expected value is \(\beta_1\), we can conclude
-    that the bias of our estimator is 0.
-    \\
-
-    For the variance:
-
-    \[
-        \begin{split}
-            \Var[\hat{\beta_1}]
-            &= \Var \left[ \frac{
-                \sum {x_i Y_i}
-            }{
-                \sum x_i^2
-            }\right]
-            \\
-            &=
-            \frac{
-                \sum {x_i^2}
-            }{
-                \sum x_i^2 \sum x_i^2
-            } \Var[Y_i]
-            \\
-            &=
-            \frac{
-                \sum {x_i^2}
-            }{
-                \sum x_i^2 \sum x_i^2
-            } \Var[Y_i]
-            \\
-            &=
-            \frac{
-                1
-            }{
-                \sum x_i^2
-            } \Var[Y_i]
-            \\
-            &=
-            \frac{
-                1
-            }{
-                \sum x_i^2
-            } \sigma^2
-            \\
-            &=
-            \frac{
-                \sigma^2
-            }{
-                \sum x_i^2
-            }
-        \end{split}
-    \]
-
+      \item $\forall z.1+1=2$\\
+         Pretty useless but well formed.
+   \end{itemize}
 \end{homeworkProblem}
-
-\pagebreak
 
 \begin{homeworkProblem}
-    Prove a polynomial of degree \(k\), \(a_kn^k + a_{k - 1}n^{k - 1} + \hdots
-    + a_1n^1 + a_0n^0\) is a member of \(\Theta(n^k)\) where \(a_k \hdots a_0\)
-    are nonnegative constants.
+   Reduce the following to shortest form.
 
-    \begin{proof}
-        To prove that \(a_kn^k + a_{k - 1}n^{k - 1} + \hdots + a_1n^1 +
-        a_0n^0\), we must show the following:
-
-        \[
-            \exists c_1 \exists c_2 \forall n \geq n_0,\ {c_1 \cdot g(n) \leq
-            f(n) \leq c_2 \cdot g(n)}
-        \]
-
-        For the first inequality, it is easy to see that it holds because no
-        matter what the constants are, \(n^k \leq a_kn^k + a_{k - 1}n^{k - 1} +
-        \hdots + a_1n^1 + a_0n^0\) even if \(c_1 = 1\) and \(n_0 = 1\).  This
-        is because \(n^k \leq c_1 \cdot a_kn^k\) for any nonnegative constant,
-        \(c_1\) and \(a_k\).
-        \\
-
-        Taking the second inequality, we prove it in the following way.
-        By summation, \(\sum\limits_{i=0}^k a_i\) will give us a new constant,
-        \(A\). By taking this value of \(A\), we can then do the following:
-
-        \[
-            \begin{split}
-                a_kn^k + a_{k - 1}n^{k - 1} + \hdots + a_1n^1 + a_0n^0 &=
-                \\
-                &\leq (a_k + a_{k - 1} \hdots a_1 + a_0) \cdot n^k
-                \\
-                &= A \cdot n^k
-                \\
-                &\leq c_2 \cdot n^k
-            \end{split}
-        \]
-
-        where \(n_0 = 1\) and \(c_2 = A\). \(c_2\) is just a constant. Thus the
-        proof is complete.
-    \end{proof}
+   \begin{itemize}
+      \item $\nexists x \exists y.(\lnot x \lor \lnot y)$
+         \begin{align*}
+            &\forall x. \forall y \lnot(\lnot x \lor \lnot y)    &&DM_{\exists} * 2\\
+            &\forall x, y. x \land y                             &&DM_{\lor}
+         \end{align*}
+      \item $\forall q.((\forall x.x) \land (\forall y.y) \to (\forall z.q))$
+         \begin{align*}
+            &\forall q,z.((\forall x.x) \land (\forall y.y) \to q)    &&Cov_{\forall}\\
+            &\forall q,z.(\forall x,y.x \land y) \to q    &&Com_{\land}, \forall_{\land} * 2\\
+            &\forall q,z \exists x,y.x \land y \to q        &&Cont_{\forall}
+         \end{align*}
+      \item $(\forall x.x) \to (\exists y. \lnot y)$
+         \begin{align*}
+            &\exists x.x \to (\exists y. \lnot y) &&Cont_{\forall}\\
+            &\exists x,y.x \to \lnot y    &&Cov_{\exists}
+         \end{align*}
+   \end{itemize}
 \end{homeworkProblem}
 
-\pagebreak
-
-%
-% Non sequential homework problems
-%
-
-% Jump to problem 18
-\begin{homeworkProblem}[18]
-    Evaluate \(\sum_{k=1}^{5} k^2\) and \(\sum_{k=1}^{5} (k - 1)^2\).
-\end{homeworkProblem}
-
-% Continue counting to 19
 \begin{homeworkProblem}
-    Find the derivative of \(f(x) = x^4 + 3x^2 - 2\)
-\end{homeworkProblem}
+   Convert the following into PNF.
 
-% Go back to where we left off
-\begin{homeworkProblem}[6]
-    Evaluate the integrals
-    \(\int_0^1 (1 - x^2) \dx\)
-    and
-    \(\int_1^{\infty} \frac{1}{x^2} \dx\).
+   \begin{itemize}
+      \item $(\forall a \exists b. a \to b) \land (\forall b \exists a. a \to b)$
+         \begin{align*}
+            &(\forall a \exists b. a \to b) \land (\forall c \exists d. a \to b[b \mapsto c][a \mapsto d])   &&Rep_{\forall}, Rep_{\exists}\\
+            &\forall a,c \exists b,d. a \to b \land d \to c      &&\forall_{\land}, \exists_{\land}
+         \end{align*}
+      \item $\forall a.P(a) \to (\exists a.R(a,a))$
+         \begin{align*}
+            &\forall a.P(a) \to (\exists b.R(a,a)[a \mapsto b])      &&Rep_{\exists}\\
+            &\forall a \exists b.P(a) \to R(b,b)         &&Cov_{\exists}
+         \end{align*}
+      \item $\forall x.(\forall y.x \to y) \land (\forall y.y \to x)$
+         \begin{align*}
+            &\forall x.(\forall y.x \to y) \land (\forall z.y \to x[y \mapsto z])      &&Rep_{\forall}\\
+            &\forall x,y,z.x \to y \land z \to x               &&\forall_{\land} * 2
+         \end{align*}
+      \item $\forall x.(\forall y.x \to y) \to (\forall z.z)$
+         \begin{align*}
+            &\forall x, z \exists y.(x \to y) \to z   &&Cont_{\forall}, Cov_{\exists}\\
+         \end{align*}
+      \item $\forall x. \lnot (\forall y.y) \to \lnot (\forall z. x \land z)$
+         \begin{align*}
+            &\forall x.(\exists y. \lnot y) \to (\exists z.\lnot (x \land z))    &&DM_{\exists}\\
+            &\forall x,y \exists z.\lnot y \to \lnot (x \land z)     &&Cont_{\exists}, Cov_{\exists}\\
+         \end{align*}
+   \end{itemize}
 \end{homeworkProblem}
-
 \end{document}
