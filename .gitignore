@@ -1,3 +1,6 @@
+## Dont do tars
+*.tar
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
