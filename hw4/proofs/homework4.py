@@ -68,7 +68,42 @@ def DM1():
 
 #EX x. ~P(x) |- ~FA x. P(x)
 def DM2():
-    raise Exception("DM2 not implemented")
+    return notI(
+            arrowI(
+              assume(parse("FA x. P(x)")),
+              notE(
+                forallE(
+                  assumed(parse("FA x. P(x)")),
+                  "c",
+                  parse("P(c)")
+                  ),
+                existsE(
+                  premise(parse("EX x. ~P(x)")),
+                  "d",
+                  arrowI(
+                    assume(parse("~P(d)")),
+                    FE(
+                      notE(
+                        forallE(
+                          assumed(parse("FA x. P(x)")),
+                          "d",
+                          parse("P(d)")
+                          ),
+                        assumed(parse("~P(d)")),
+                        false()
+                        ),
+                      parse("~P(c)")
+                      ),
+                    parse("~P(d) -> ~P(c)")
+                    ),
+                  parse("~P(c)")
+                  ),
+                false()
+                ),
+              Arrow(parse("FA x. P(x)"), false())
+              ),
+            parse("~FA x. P(x)")
+            )
 
 #~ EX x. P(x) |- FA x. ~P(x)
 def DM3():
@@ -116,8 +151,8 @@ def main():
         forall_comm().print_proof()
         clear()
         DM1().print_proof()
-#       clear()
-#       DM2().print_proof()
+        clear()
+        DM2().print_proof()
         clear()
         DM3().print_proof()
         clear()
