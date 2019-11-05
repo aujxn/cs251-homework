@@ -1,0 +1,154 @@
+\documentclass{exam}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{hhline}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{bussproofs}
+
+\title{CS251 homework 3}
+\author{name:\underline{\hspace{2in}}}
+\date{Due: 10/29/19}
+
+% these are several symbols that I redefined to make formulas easier to read
+\def\land{\wedge}           % /\
+\def\lor{\vee}              % \/
+\def\lnot{\neg}             % -
+\def\liff{\leftrightarrow}  % <->
+\def\xor{\oplus}            % (+)
+\def\T{\top}                % T
+\def\F{\bot}                % _|_
+
+\def\proves{\vdash}
+\newcommand{\bra}[1]{\langle#1|}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\braket}[2]{\langle#1|#2\rangle}
+
+\def\R{\mathbb{R}}
+\def\C{\mathbb{C}}
+
+
+\begin{document}
+\maketitle
+
+% these are commands that use the bussproofs package.
+% they let you write tree style proofs.
+% you can get the package here:  https://www.math.ucsd.edu/~sbuss/ResearchWeb/bussproofs/bussproofs.sty
+
+\newcommand{\premise}    [1]{\AxiomC{#1}}
+\newcommand{\assumption} [1]{\AxiomC{[#1]}}
+\newcommand{\andI}       [1]{\RightLabel{$\land I$}   \BinaryInfC{#1} }
+\newcommand{\andEL}      [1]{\RightLabel{$\land E1$}  \UnaryInfC{#1}  }
+\newcommand{\andER}      [1]{\RightLabel{$\land E2$}  \UnaryInfC{#1}  }
+\newcommand{\orIL}       [1]{\RightLabel{$\lor I1$}   \UnaryInfC{#1}  }
+\newcommand{\orIR}       [1]{\RightLabel{$\lor I2$}   \UnaryInfC{#1}  }
+\newcommand{\orE}        [1]{\RightLabel{$\lor E$}    \TrinaryInfC{#1}}
+\newcommand{\arrowI}     [1]{\RightLabel{$\to I$}     \BinaryInfC{#1} }
+\newcommand{\arrowE}     [1]{\RightLabel{$\to E$}     \BinaryInfC{#1} }
+\newcommand{\notE}       [1]{\RightLabel{$\lnot E$}   \BinaryInfC{#1} }
+\newcommand{\notI}       [1]{\RightLabel{$\lnot I$}   \UnaryInfC{#1}  }
+\newcommand{\FE}         [1]{\RightLabel{$\F E$}      \UnaryInfC{#1}  }
+\newcommand{\TI}         [1]{\RightLabel{$\T I$}      \UnaryInfC{#1}  }
+\newcommand{\LEM}        [1]{\RightLabel{$LEM$}       \UnaryInfC{#1}  }
+\newcommand{\DLL}        [1]{\RightLabel{$DL1$}       \UnaryInfC{#1}  }
+\newcommand{\DLR}        [1]{\RightLabel{$DL2$}       \UnaryInfC{#1}  }
+\newcommand{\notNotE}    [1]{\RightLabel{$\lnot \lnot E$} \UnaryInfC{#1} }
+\newcommand{\ForI}       [1]{\RightLabel{$\forall I$} \BinaryInfC{#1}}
+\newcommand{\ForE}       [1]{\RightLabel{$\forall E$} \UnaryInfC{#1} }
+\newcommand{\ExI}        [1]{\RightLabel{$\exists I$} \UnaryInfC{#1} }
+\newcommand{\ExE}        [1]{\RightLabel{$\exists E$} \BinaryInfC{#1}}
+\newcommand{\refl}       [1]{\premise{$\ $}\RightLabel{$Refl$}      \UnaryInfC{#1}   }
+\newcommand{\eqEL}       [1]{\RightLabel{$=E1$}                     \BinaryInfC{#1}  }
+\newcommand{\eqER}       [1]{\RightLabel{$=E2$}                     \BinaryInfC{#1}  }
+
+% we can write proofs by just writing the inference rules
+% for example we can write the proof
+
+% A /\ B       A /\ B
+% ------/\E1  --------/\E2
+%   B            A
+%   -------------- /\I
+%       B /\ A
+
+% as
+%
+% \begin{prooftree}
+%   \premise{$A \land B$}
+%   \andER{$B$}
+%
+%   \premise{$A \land B$}
+%   \andEL{$A$}
+%
+%   \andI{$B \land A$}
+% \end{prooftree}
+
+\begin{questions}
+
+
+\question
+Prove the following.\\
+use the homework4.py file to verify that the proofs are correct.
+\begin{parts}
+  \part $\forall x. \forall y. P(x,y) \proves \forall y. \forall x. P(x,y)$
+        \vspace{5cm}
+
+  \part $\forall x. \lnot P(x) \proves \lnot \exists x. P(x)$
+        \vspace{5cm}
+
+  \part $\exists x. \lnot P(x) \proves \lnot \forall x. P(x)$
+        \vspace{5cm}
+
+  \part $\lnot \exists x. P(x) \proves \forall x. \lnot P(x)$
+        \vspace{5cm}
+
+  \part $\forall x. P(x) \to Q \proves (\exists x. P(x)) \to Q$
+        \vspace{5cm}
+\end{parts}
+
+
+\question
+Prove the following using equality.\\
+You don't need to code these in python.
+\begin{parts}
+  \part $x = y \proves y = x$
+        \vspace{3cm}
+
+  \part $x = y, y = z \proves x = z$
+        \vspace{3cm}
+
+\pagebreak
+
+  \part $\forall y. y = 0 \lor (\exists z. y = z+1),$\\
+        $\forall x. x + 0 = x, $\\
+        $\forall x. x = 0 + x, $\\
+        $\forall x y. x + (y + 1) = (y + 1) + x,$\\
+        $\proves \forall n m. n + m = m + n$
+        \vspace{9cm}
+\end{parts}
+
+\pagebreak
+
+\question
+
+It turns out that you don't have to actually understand something in order to prove it.\\
+$\ $\\
+To demonstrate this:\\
+Prove the No Cloning theorem from Quantum Mechanics.\\
+If you want an explanation of what you're actually proving,\\
+Minute Physics did a video on YouTube.\\
+\url{https://www.youtube.com/watch?v=owPC60Ue0BE}\\
+$\ $\\
+$\forall (U\in \C^{n\times n}) (a\in \C^n) (b\in \C^n). U(\braket a b) = \braket a b$,\\
+$\forall (U\in \C^{n\times n}) (a\in \C^n) (b\in \C^n). U(a b) = U(a) U(b)$,\\
+$\forall a\in \R.\ (a\cdot a = a) \to (a = 0 \lor a = 1)$,\\
+$\forall (a\in \C^n) (b\in \C^n). \braket a b = (\bra a \otimes\bra 0)(\ket b \otimes \ket 0)$,\\
+$\forall (a\in \C^n) (b\in \C^n). (\bra a \otimes\bra a)(\ket b \otimes \ket b) = \braket a b \cdot \braket a b $,\\
+$\proves$\\
+$((U(\ket a \otimes \ket 0) = \ket a \otimes\ket a) \land 
+(U(\ket b \otimes\ket 0)  = \ket b \otimes\ket b)) \to
+\braket a b = 0 \lor \braket a b = 1$\\
+
+
+
+\end{questions}
+\end{document}
