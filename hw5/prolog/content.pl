@@ -61,6 +61,12 @@ concat([], B, B).
 concat([H|T], B, [H|C]) :-
    concat(T, B, C).
 
+% kludgy concat mod for translate
+split(List, Part1, Part2) :-
+   concat(Part1, Part2, List),
+   len(Part1, Len1),
+   Len1 \= 0.
+
 insert(X, T, XT) :-
    concat(A, B, T),
    concat(A, [X|B], XT).
@@ -87,7 +93,7 @@ add_col([C|CS], [R|RS], [[C|R]|CRS]) :-
 transpose([], []).
 transpose([Row|Rows], Trans) :- 
    transpose(Rows, TransRows), 
-   add_col(Row, TransRows, Trans). 
+   add_col(Row, TransRows, Trans).  /**/  
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % graph theory
@@ -200,22 +206,24 @@ color_conflict(Colors) :-
 % w | わ          を
 % n | ん
 
-kana(a , あ). kana( i,  い). kana( u,  う). kana( e, え). kana( o, お).
-kana(ka, か). kana(ki,  き). kana(ku,  く). kana(ke, え). kana(ko, こ).
-kana(ga, が). kana(gi,  ぎ). kana(gu,  ぐ). kana(ge, げ). kana(go, ご).
-kana(sa, さ). kana(si,  し). kana(su,  す). kana(se, せ). kana(so, そ).
-kana(za, ざ). kana(zi,  じ). kana(zu,  ず). kana(ze, ぜ). kana(zo, ぞ).
-kana(ta, た). kana(ti,  ち). kana(tu,  つ). kana(te, て). kana(to, と).
-kana(da, だ). kana(di,  ぢ). kana(du,  づ). kana(de, で). kana(do, ど).
-kana(na, な). kana(ni,  に). kana(nu,  ぬ). kana(ne, ね). kana(no, の).
-kana(ma, ま). kana(mi,  み). kana(mu,  む). kana(me, め). kana(mo, も).
-kana(ra, ら). kana(ri,  り). kana(ru,  る). kana(re, れ). kana(ro, ろ).
-kana(ha, は). kana(hi,  ひ). kana(hu,  ふ). kana(he, へ). kana(ho, ほ).
-kana(ba, ば). kana(bi,  び). kana(bu,  ぶ). kana(be, べ). kana(bo, ぼ).
-kana(pa, ぱ). kana(pi,  ぴ). kana(pu,  ぷ). kana(pe, ぺ). kana(po, ぽ).
-kana(ya, や).                kana(yu,  ゆ).               kana(yo, よ).
-kana(wa, わ).                                             kana(wo, を).
-kana(n,  ん).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+kana(a  , あ).  /**/  kana( i ,  い).  /**/  kana( u ,  う).  /**/  kana( e , え).  /**/  kana( o , お). %
+kana(ka , か).  /**/  kana(ki ,  き).  /**/  kana(ku ,  く).  /**/  kana(ke , え).  /**/  kana(ko , こ). %
+kana(ga , が).  /**/  kana(gi ,  ぎ).  /**/  kana(gu ,  ぐ).  /**/  kana(ge , げ).  /**/  kana(go , ご). %
+kana(sa , さ).  /**/  kana(shi,  し).  /**/  kana(su ,  す).  /**/  kana(se , せ).  /**/  kana(so , そ). %
+kana(za , ざ).  /**/  kana(ji ,  じ).  /**/  kana(zu ,  ず).  /**/  kana(ze , ぜ).  /**/  kana(zo , ぞ). %
+kana(ta , た).  /**/  kana(chi,  ち).  /**/  kana(tsu,  つ).  /**/  kana(te , て).  /**/  kana(to , と). %
+kana(da , だ).  /**/  kana(ji ,  ぢ).  /**/  kana(du ,  づ).  /**/  kana(de , で).  /**/  kana(zu , ど). %
+kana(na , な).  /**/  kana(ni ,  に).  /**/  kana(nu ,  ぬ).  /**/  kana(ne , ね).  /**/  kana(no , の). %
+kana(ma , ま).  /**/  kana(mi ,  み).  /**/  kana(mu ,  む).  /**/  kana(me , め).  /**/  kana(mo , も). %
+kana(ra , ら).  /**/  kana(ri ,  り).  /**/  kana(ru ,  る).  /**/  kana(re , れ).  /**/  kana(ro , ろ). %
+kana(ha , は).  /**/  kana(hi ,  ひ).  /**/  kana(fu ,  ふ).  /**/  kana(he , へ).  /**/  kana(ho , ほ). %
+kana(ba , ば).  /**/  kana(bi ,  び).  /**/  kana(bu ,  ぶ).  /**/  kana(be , べ).  /**/  kana(bo , ぼ). %
+kana(pa , ぱ).  /**/  kana(pi ,  ぴ).  /**/  kana(pu ,  ぷ).  /**/  kana(pe , ぺ).  /**/  kana(po , ぽ). %
+kana(ya , や).  /**/                   /**/  kana(yu ,  ゆ).  /**/                  /**/  kana(yo , よ). %
+kana(wa , わ).  /**/                   /**/                   /**/                  /**/  kana(wo , を). %
+kana(n  , ん).  /**/                   /**/                   /**/                  /**/                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % boolean algebra

@@ -220,7 +220,7 @@ sorted([H1, H2|T]) :-
 % edge(v1,v2).
 
 % This solution uses the vertices predicate to determine
-% if the graph has a cycle.
+% if the graph has a cycle. It returns true a bunch but it works.
 cycle() :- 
    pair(X, Y),
    path(X, Y, P1, []),
@@ -229,7 +229,8 @@ cycle() :-
    RevP1 \= P2.
 
 % This solution finds all the cycles in the graph or determines
-% if a list of vertices makes a cycle.
+% if a list of vertices makes a cycle. Cycles that contain the same
+% vertices are different cycles for each starting vertex.
 cycle2([Start|Path]) :-
    vertices(V),
    member(Start, V),
@@ -267,14 +268,10 @@ toKana(Str,KanaStr) :-
 % so it should work with n, so, shi, and any others.
 % try to do this all with 2 two rules.
 % the empty rule, and a rule of every other case.
-%
-% here is the origonal code from class
-toKanaList([], []).
-toKanaList([C|Rest], [K|KRest]) :-
-   kana(C,K),
-toKanaList(Rest,KRest).
 
-toKanaList([C1,C2|Rest], [K|KRest]) :-
-   atom_chars(C,[C1,C2]),
-   kana(C,K),
-   toKanaList(Rest,KRest).
+toKanaList([], []).
+toKanaList(CharsList, [KanaChar|KanaList]) :-
+   split(CharsList, Chars1List, Chars2List),
+   atom_chars(CharsAtom, Chars1List),
+   kana(CharsAtom, KanaChar),
+   toKanaList(Chars2List, KanaList).
