@@ -1,7 +1,14 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Far, Far too many rules.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS 251: homework 5
+% Name: Austen Nelson
+% Due: 11/19/19
+%
+% The files homework5.pl, potter.pl, and content.pl
+% are relavant
+%
+% This file provides the rules for Harry Potter
+% family tree. Married predicate is (husband, wife)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 male(charius_potter).
 male(fleamont_potter).
 male(james_potter).

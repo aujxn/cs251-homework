@@ -1,3 +1,12 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS 251: homework 5
+% Name: Austen Nelson
+% Due: 11/19/19
+%
+% The files homework5.pl, potter.pl, and content.pl
+% are relavant
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 :-op(200, fx, [~]).
 :-op(300, xfx, [/\]).
 :-op(400, xfx, [\/]).

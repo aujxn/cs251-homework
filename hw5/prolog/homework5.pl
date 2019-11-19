@@ -1,14 +1,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% CS 251: homework 4
+% CS 251: homework 5
 % Name: Austen Nelson
 % Due: 11/19/19
 %
-% The files kana.pl, graph.pl, and potter.pl
+% The files homework5.pl, potter.pl, and content.pl
 % are relavant
-%
-% You can load them all with
-% ?- [potter, graph, homework4].
-%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
