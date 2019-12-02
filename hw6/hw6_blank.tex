@@ -1,0 +1,286 @@
+
+\documentclass{exam}
+\usepackage{url}
+\usepackage{tikz}
+\usepackage{qtree}
+
+\def\house{
+\begin{tikzpicture}
+    \coordinate (v1) at (.5,2); 
+    \coordinate (v2) at (0,1); 
+    \coordinate (v3) at (1,1); 
+    \coordinate (v4) at (0,0); 
+    \coordinate (v5) at (1,0); 
+    \fill (v1) circle (0.1);
+    \fill (v2) circle (0.1);
+    \fill (v3) circle (0.1);
+    \fill (v4) circle (0.1);
+    \fill (v5) circle (0.1);
+    \draw (v1) -- (v2);
+    \draw (v1) -- (v3);
+    \draw (v2) -- (v3);
+    \draw (v2) -- (v4);
+    \draw (v3) -- (v5);
+    \draw (v4) -- (v5);
+\end{tikzpicture}}
+
+\def\cube{
+\begin{tikzpicture}
+    \coordinate (v1) at (0,0); 
+    \coordinate (v2) at (0,2); 
+    \coordinate (v3) at (2,2); 
+    \coordinate (v4) at (2,0); 
+    \coordinate (v5) at (1,1); 
+    \coordinate (v6) at (1,3); 
+    \coordinate (v7) at (3,3); 
+    \coordinate (v8) at (3,1); 
+    \fill (v1) circle (0.1);
+    \fill (v2) circle (0.1);
+    \fill (v3) circle (0.1);
+    \fill (v4) circle (0.1);
+    \fill (v5) circle (0.1);
+    \fill (v6) circle (0.1);
+    \fill (v7) circle (0.1);
+    \fill (v8) circle (0.1);
+    \draw (v1) -- (v2) -- (v3) -- (v4) -- (v1);
+    \draw (v5) -- (v6) -- (v7) -- (v8) -- (v5);
+    \draw (v1) -- (v5);
+    \draw (v2) -- (v6);
+    \draw (v3) -- (v7);
+    \draw (v4) -- (v8);
+\end{tikzpicture}}
+
+\def\graphA{
+\begin{tikzpicture}
+    \coordinate (v1)  at ( 0,    1.00); 
+    \coordinate (v2)  at (-0.95, 0.31); 
+    \coordinate (v3)  at (-0.59,-0.81); 
+    \coordinate (v4)  at ( 0.59,-0.81); 
+    \coordinate (v5)  at ( 0.95, 0.31); 
+    \coordinate (v6)  at ( 0   , 2.00); 
+    \coordinate (v7)  at (-1.90, 0.62); 
+    \coordinate (v8)  at (-1.18,-1.62); 
+    \coordinate (v9)  at ( 1.18,-1.62); 
+    \coordinate (v10) at ( 1.90, 0.62); 
+    \fill (v1) circle (0.1);
+    \fill (v2) circle (0.1);
+    \fill (v3) circle (0.1);
+    \fill (v4) circle (0.1);
+    \fill (v5) circle (0.1);
+    \fill (v6) circle (0.1);
+    \fill (v7) circle (0.1);
+    \fill (v8) circle (0.1);
+    \fill (v9) circle (0.1);
+    \fill (v10) circle (0.1);
+    \draw (v1) -- (v3) -- (v5) -- (v2) -- (v4)  -- (v1);
+    \draw (v6) -- (v7) -- (v8) -- (v9) -- (v10) -- (v6);
+    \draw (v1) -- (v6);
+    \draw (v2) -- (v7);
+    \draw (v3) -- (v8);
+    \draw (v4) -- (v9);
+    \draw (v5) -- (v10);
+\end{tikzpicture}}
+
+
+\def\graphB{
+\begin{tikzpicture}
+    \coordinate (v1)  at ( 0,    0   ); 
+    \coordinate (v2)  at ( 0   , 2.00); 
+    \coordinate (v3)  at (-1.29, 1.53); 
+    \coordinate (v4)  at (-1.97, 0.35); 
+    \coordinate (v5)  at (-1.73,-1.00); 
+    \coordinate (v6)  at (-0.68,-1.88); 
+    \coordinate (v7)  at ( 0.68,-1.88); 
+    \coordinate (v8)  at ( 1.73,-1.00); 
+    \coordinate (v9)  at ( 1.97, 0.35); 
+    \coordinate (v10) at ( 1.29, 1.53); 
+    \fill (v1) circle (0.1);
+    \fill (v2) circle (0.1);
+    \fill (v3) circle (0.1);
+    \fill (v4) circle (0.1);
+    \fill (v5) circle (0.1);
+    \fill (v6) circle (0.1);
+    \fill (v7) circle (0.1);
+    \fill (v8) circle (0.1);
+    \fill (v9) circle (0.1);
+    \fill (v10) circle (0.1);
+    \draw (v2) -- (v3) -- (v4) -- (v5) -- (v6)  -- (v7) -- (v8) -- (v9) -- (v10) -- (v2);
+    \draw (v1) -- (v2);
+    \draw (v1) -- (v5);
+    \draw (v1) -- (v8);
+    \draw (v3) -- (v7);
+    \draw (v4) -- (v9);
+    \draw (v6) -- (v10);
+\end{tikzpicture}}
+
+
+
+\def\grid{
+\begin{tikzpicture}
+    \coordinate (v1)  at (0, 0); 
+    \coordinate (v2)  at (0, 2); 
+    \coordinate (v3)  at (0, 4); 
+    \coordinate (v4)  at (0, 6); 
+    \coordinate (v5)  at (2, 0); 
+    \coordinate (v6)  at (2, 2); 
+    \coordinate (v7)  at (2, 4); 
+    \coordinate (v8)  at (2, 6); 
+    \coordinate (v9)  at (4, 0); 
+    \coordinate (v10) at (4, 2); 
+    \coordinate (v11) at (4, 4); 
+    \coordinate (v12) at (4, 6); 
+    \coordinate (v13) at (6, 0); 
+    \coordinate (v14) at (6, 2); 
+    \coordinate (v15) at (6, 4); 
+    \coordinate (v16) at (6, 6); 
+    \fill[red] (v1) circle (0.1) node[below left] {A} ;
+    \fill (v2)  circle (0.1) node[below left] {B} ;
+    \fill (v3)  circle (0.1) node[below left] {C} ;
+    \fill (v4)  circle (0.1) node[below left] {D} ;
+    \fill (v5)  circle (0.1) node[below left] {E} ;
+    \fill (v6)  circle (0.1) node[below left] {F} ;
+    \fill (v7)  circle (0.1) node[below left] {G} ;
+    \fill (v8)  circle (0.1) node[below left] {H} ;
+    \fill (v9)  circle (0.1) node[below left] {I} ;
+    \fill (v10) circle (0.1) node[below left] {J} ;
+    \fill (v11) circle (0.1) node[below left] {K} ;
+    \fill (v12) circle (0.1) node[below left] {L} ;
+    \fill (v13) circle (0.1) node[below left] {M} ;
+    \fill (v14) circle (0.1) node[below left] {N} ;
+    \fill (v15) circle (0.1) node[below left] {O} ;
+    \fill[green] (v16) circle (0.1)  node[below left] {P} ;
+    \draw (v1)  edge node[left] {4} (v2)  ; 
+    \draw (v2)  edge node[left] {3} (v3)  ; 
+    \draw (v3)  edge node[left] {4} (v4)  ; 
+    \draw (v5)  edge node[left] {1} (v6)  ; 
+    \draw (v6)  edge node[left] {1} (v7)  ; 
+    \draw (v7)  edge node[left] {1} (v8)  ; 
+    \draw (v9)  edge node[left] {1} (v10) ; 
+    \draw (v10) edge node[left] {1} (v11) ; 
+    \draw (v11) edge node[left] {1} (v12) ; 
+    \draw (v13) edge node[left] {1} (v14) ; 
+    \draw (v14) edge node[left] {1} (v15) ; 
+    \draw (v15) edge node[left] {1} (v16) ; 
+    \draw (v1)  edge node[above] {1} (v5)  ; 
+    \draw (v5)  edge node[above] {7} (v9)  ; 
+    \draw (v9)  edge node[above] {1} (v13) ; 
+    \draw (v2)  edge node[above] {9} (v6)  ; 
+    \draw (v6)  edge node[above] {5} (v10) ; 
+    \draw (v10) edge node[above] {2} (v14) ; 
+    \draw (v3)  edge node[above] {4} (v7)  ; 
+    \draw (v7)  edge node[above] {9} (v11) ; 
+    \draw (v11) edge node[above] {5} (v15) ; 
+    \draw (v4)  edge node[above] {7} (v8)  ; 
+    \draw (v8)  edge node[above] {1} (v12) ; 
+    \draw (v12) edge node[above] {9} (v16) ; 
+\end{tikzpicture}}
+
+
+\title{CS251 homeowrk 6}
+\author{name:\underline{\hspace{2in}}}
+\date{Due: 12/3/19}
+
+\def\O{\mathcal{O}}
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+
+\question
+Determine if the following graphs are Isomorphic.\\
+If they are: prove it.
+If they are not, well.. Also prove it.\\
+$\ $\\
+$\ $\\
+\graphA
+\hspace{2cm}
+\graphB
+\vspace{4cm}
+
+\question
+Find the chromatic number of this graph.\\
+Justify your answer.\\
+\graphA
+
+\pagebreak
+
+\question
+Given the prolog program
+\begin{verbatim}
+p :- a, b, c.
+a :- b, d.
+a :- b, e.
+b :- x.
+b :- y.
+c.
+y.
+d :- x.
+e.
+\end{verbatim} 
+Use SLD resolution to evaluate the query
+\begin{verbatim}
+?- p.
+\end{verbatim}
+\pagebreak
+
+\question
+For each of the following graphs,
+\begin{parts}
+\part Number the vertices.
+\part Make an edge list.
+\part Make an adjacency list.
+\part Make an adjacency matrix.
+\end{parts}
+ 
+\house \hspace{2cm} \cube \hspace{2cm} \graphA\\
+
+\pagebreak
+
+\question
+
+Given the heap\\
+\Tree[.4 [.7 10 9 ] [.8 11 ] ]\\
+Perform the following operations.
+After each one, draw the heap, and write out the array representing the heap.
+
+\begin{parts}
+\part push(5)
+\vspace{4cm}
+\part pop
+\vspace{4cm}
+\part push(3)
+\vspace{4cm}
+\part pop
+\end{parts}
+
+\pagebreak
+
+\question
+Prove that if a graph contains no odd cycles, then it is bipartite.
+
+\pagebreak
+
+\question
+Prove that if a graph has an Eulerian circuit, 
+then all of the vertices have even degree.\\
+
+\pagebreak
+
+\question
+Prove Euler's formula $V - E + F = 2$ for planar graphs.\\
+Here's a fun youtube video\\
+\url{https://www.youtube.com/watch?v=-9OUyo8NFZg}\\
+Here's another fun, but maybe less relevant, video)\\
+\url{https://www.youtube.com/watch?v=6bWJu8DvFMk}
+
+\pagebreak
+\question
+run depth first search, breadth first search, and Dijkstra's on the following graph.\\
+When picking which vertex to look at next, pick the next vertex alphabetically.\\
+
+\grid
+
+\end{questions}
+
+\end{document}

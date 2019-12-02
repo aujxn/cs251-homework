@@ -1,0 +1,534 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{qtree}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{array}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Homework\ \#6}
+\newcommand{\hmwkDueDate}{December 3, 2019}
+\newcommand{\hmwkClass}{CS251}
+\newcommand{\hmwkClassTime}{Section A}
+\newcommand{\hmwkClassInstructor}{Steven Libby}
+\newcommand{\hmwkAuthorName}{\textbf{Austen Nelson}}
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 2:00pm}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+    \vspace{3in}
+}
+
+\author{\hmwkAuthorName}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\def\house{
+\begin{tikzpicture}
+    \coordinate[label=above:1] (v1) at (.5,2); 
+    \coordinate[label=left:2] (v2) at (0,1); 
+    \coordinate[label=right:3] (v3) at (1,1); 
+    \coordinate[label=left:4] (v4) at (0,0); 
+    \coordinate[label=right:5] (v5) at (1,0); 
+    \fill (v1) circle (0.1);
+    \fill (v2) circle (0.1);
+    \fill (v3) circle (0.1);
+    \fill (v4) circle (0.1);
+    \fill (v5) circle (0.1);
+    \draw (v1) -- (v2);
+    \draw (v1) -- (v3);
+    \draw (v2) -- (v3);
+    \draw (v2) -- (v4);
+    \draw (v3) -- (v5);
+    \draw (v4) -- (v5);
+\end{tikzpicture}}
+
+\def\houseEdgeList{
+   $
+   \begin{bmatrix}
+      1 \leftrightarrow 2 \\
+      1 \leftrightarrow 3 \\
+      2 \leftrightarrow 3 \\
+      2 \leftrightarrow 4 \\
+      3 \leftrightarrow 5 \\
+      4 \leftrightarrow 5 \\
+   \end{bmatrix}
+   $
+}
+
+\def\houseAdjList{
+   $
+   \begin{bmatrix}
+      1 & \to & 2,3   \\
+      2 & \to & 1,3,4 \\
+      3 & \to & 1,2,5 \\
+      4 & \to & 2,5   \\
+      5 & \to & 3,4   \\
+   \end{bmatrix}
+   $
+}
+
+\def\houseAdjMatrix{
+   $
+   \begin{bmatrix}
+      0 & 1 & 1 & 0 & 0 \\
+      1 & 0 & 1 & 1 & 0 \\
+      1 & 1 & 0 & 0 & 1 \\
+      0 & 1 & 0 & 0 & 1 \\
+      0 & 0 & 1 & 1 & 0 \\
+   \end{bmatrix}
+   $
+}
+
+\def\cube{
+\begin{tikzpicture}
+    \coordinate[label=below:1] (v1) at (0,0); 
+    \coordinate[label=above:2] (v2) at (0,2); 
+    \coordinate[label=above:3] (v3) at (2,2); 
+    \coordinate[label=below:4] (v4) at (2,0); 
+    \coordinate[label=below:5] (v5) at (1,1); 
+    \coordinate[label=above:6] (v6) at (1,3); 
+    \coordinate[label=above:7] (v7) at (3,3); 
+    \coordinate[label=below:8] (v8) at (3,1); 
+    \fill (v1) circle (0.1);
+    \fill (v2) circle (0.1);
+    \fill (v3) circle (0.1);
+    \fill (v4) circle (0.1);
+    \fill (v5) circle (0.1);
+    \fill (v6) circle (0.1);
+    \fill (v7) circle (0.1);
+    \fill (v8) circle (0.1);
+    \draw (v1) -- (v2) -- (v3) -- (v4) -- (v1);
+    \draw (v5) -- (v6) -- (v7) -- (v8) -- (v5);
+    \draw (v1) -- (v5);
+    \draw (v2) -- (v6);
+    \draw (v3) -- (v7);
+    \draw (v4) -- (v8);
+\end{tikzpicture}}
+
+\def\cubeEdgeList{
+   $
+   \begin{bmatrix}
+      1 \leftrightarrow 2 \\
+      1 \leftrightarrow 4 \\
+      1 \leftrightarrow 5 \\
+      2 \leftrightarrow 3 \\
+      2 \leftrightarrow 6 \\
+      3 \leftrightarrow 4 \\
+      3 \leftrightarrow 7 \\
+      4 \leftrightarrow 8 \\
+      5 \leftrightarrow 6 \\
+      5 \leftrightarrow 8 \\
+      6 \leftrightarrow 7 \\
+      7 \leftrightarrow 8 \\
+   \end{bmatrix}
+   $
+}
+
+\def\cubeAdjList{
+   $
+   \begin{bmatrix}
+      1 & \to & 2,4,5 \\
+      2 & \to & 1,3,6 \\
+      3 & \to & 2,4,7 \\
+      4 & \to & 1,3,8 \\
+      5 & \to & 1,6,8 \\
+      6 & \to & 2,5,7 \\
+      7 & \to & 3,6,8 \\
+      8 & \to & 4,5,7 \\
+   \end{bmatrix}
+   $
+}
+
+\def\cubeAdjMatrix{
+   $
+   \begin{bmatrix}
+      0 & 1 & 0 & 1 & 1 & 0 & 0 & 0 \\
+      1 & 0 & 1 & 0 & 0 & 1 & 0 & 0 \\
+      0 & 1 & 0 & 1 & 0 & 0 & 1 & 0 \\
+      1 & 0 & 1 & 0 & 0 & 0 & 0 & 1 \\
+      1 & 0 & 0 & 0 & 0 & 1 & 0 & 1 \\
+      0 & 1 & 0 & 0 & 1 & 0 & 1 & 0 \\
+      0 & 0 & 1 & 0 & 0 & 1 & 0 & 1 \\
+      0 & 0 & 0 & 1 & 1 & 0 & 1 & 0 \\
+   \end{bmatrix}
+   $
+}
+
+\def\graphA{
+\begin{tikzpicture}
+   \coordinate[label=left:1] (v1)  at ( 0,    1.00); 
+    \coordinate[label=above:2] (v2)  at (-0.95, 0.31); 
+    \coordinate[label=left:3] (v3)  at (-0.59,-0.81); 
+    \coordinate[label=right:4] (v4)  at ( 0.59,-0.81); 
+    \coordinate[label=above:5] (v5)  at ( 0.95, 0.31); 
+    \coordinate[label=above:6] (v6)  at ( 0   , 2.00); 
+    \coordinate[label=left:7] (v7)  at (-1.90, 0.62); 
+    \coordinate[label=left:8] (v8)  at (-1.18,-1.62); 
+    \coordinate[label=right:9] (v9)  at ( 1.18,-1.62); 
+    \coordinate[label=right:10] (v10) at ( 1.90, 0.62); 
+    \fill (v1) circle (0.1);
+    \fill (v2) circle (0.1);
+    \fill (v3) circle (0.1);
+    \fill (v4) circle (0.1);
+    \fill (v5) circle (0.1);
+    \fill (v6) circle (0.1);
+    \fill (v7) circle (0.1);
+    \fill (v8) circle (0.1);
+    \fill (v9) circle (0.1);
+    \fill (v10) circle (0.1);
+    \draw (v1) -- (v3) -- (v5) -- (v2) -- (v4)  -- (v1);
+    \draw (v6) -- (v7) -- (v8) -- (v9) -- (v10) -- (v6);
+    \draw (v1) -- (v6);
+    \draw (v2) -- (v7);
+    \draw (v3) -- (v8);
+    \draw (v4) -- (v9);
+    \draw (v5) -- (v10);
+\end{tikzpicture}}
+
+\def\graphAEdgeList{
+   $
+   \begin{bmatrix}
+      1 \leftrightarrow 3  \\
+      1 \leftrightarrow 4  \\
+      1 \leftrightarrow 6  \\
+      2 \leftrightarrow 4  \\
+      2 \leftrightarrow 5  \\
+      2 \leftrightarrow 7  \\
+      3 \leftrightarrow 5  \\
+      3 \leftrightarrow 8  \\
+      4 \leftrightarrow 9  \\
+      5 \leftrightarrow 10 \\
+      6 \leftrightarrow 7  \\
+      6 \leftrightarrow 10 \\
+      7 \leftrightarrow 8  \\
+      8 \leftrightarrow 9  \\
+      9 \leftrightarrow 10 \\
+   \end{bmatrix}
+   $
+}
+
+\def\graphAAdjList{
+   $
+   \begin{bmatrix}
+      1  & \to & 3,4,6  \\
+      2  & \to & 4,5,7  \\
+      3  & \to & 1,5,8  \\
+      4  & \to & 1,2,9  \\
+      5  & \to & 2,3,10 \\
+      6  & \to & 1,7,10 \\
+      7  & \to & 2,6,8  \\
+      8  & \to & 3,7,9  \\
+      9  & \to & 4,8,10 \\
+      10 & \to & 5,6,9  \\
+   \end{bmatrix}
+   $
+}
+
+\def\graphAAdjMatrix{
+   $
+   \begin{bmatrix}
+      0 & 0 & 1 & 1 & 0 & 1 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 1 & 1 & 0 & 1 & 0 & 0 & 0 \\
+      1 & 0 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 \\
+      1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+      0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+      1 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 1 \\
+      0 & 1 & 0 & 0 & 0 & 1 & 0 & 1 & 0 & 0 \\
+      0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 1 & 0 \\
+      0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 1 \\
+      0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 1 & 0 \\
+   \end{bmatrix}
+   $
+}
+
+\def\graphB{
+\begin{tikzpicture}
+   \coordinate[label=below:1]  (v1)  at ( 0,    0   ); 
+    \coordinate[label=above:2] (v2)  at ( 0   , 2.00); 
+    \coordinate[label=above:3] (v3)  at (-1.29, 1.53); 
+    \coordinate[label=left:4] (v4)  at (-1.97, 0.35); 
+    \coordinate[label=left:5] (v5)  at (-1.73,-1.00); 
+    \coordinate[label=below:6] (v6)  at (-0.68,-1.88); 
+    \coordinate[label=below:7] (v7)  at ( 0.68,-1.88); 
+    \coordinate[label=right:8] (v8)  at ( 1.73,-1.00); 
+    \coordinate[label=right:9] (v9)  at ( 1.97, 0.35); 
+    \coordinate[label=above:10] (v10) at ( 1.29, 1.53); 
+    \fill (v1) circle (0.1);
+    \fill (v2) circle (0.1);
+    \fill (v3) circle (0.1);
+    \fill (v4) circle (0.1);
+    \fill (v5) circle (0.1);
+    \fill (v6) circle (0.1);
+    \fill (v7) circle (0.1);
+    \fill (v8) circle (0.1);
+    \fill (v9) circle (0.1);
+    \fill (v10) circle (0.1);
+    \draw (v2) -- (v3) -- (v4) -- (v5) -- (v6)  -- (v7) -- (v8) -- (v9) -- (v10) -- (v2);
+    \draw (v1) -- (v2);
+    \draw (v1) -- (v5);
+    \draw (v1) -- (v8);
+    \draw (v3) -- (v7);
+    \draw (v4) -- (v9);
+    \draw (v6) -- (v10);
+\end{tikzpicture}}
+
+\def\grid{
+\begin{tikzpicture}
+    \coordinate (v1)  at (0, 0); 
+    \coordinate (v2)  at (0, 2); 
+    \coordinate (v3)  at (0, 4); 
+    \coordinate (v4)  at (0, 6); 
+    \coordinate (v5)  at (2, 0); 
+    \coordinate (v6)  at (2, 2); 
+    \coordinate (v7)  at (2, 4); 
+    \coordinate (v8)  at (2, 6); 
+    \coordinate (v9)  at (4, 0); 
+    \coordinate (v10) at (4, 2); 
+    \coordinate (v11) at (4, 4); 
+    \coordinate (v12) at (4, 6); 
+    \coordinate (v13) at (6, 0); 
+    \coordinate (v14) at (6, 2); 
+    \coordinate (v15) at (6, 4); 
+    \coordinate (v16) at (6, 6); 
+    \fill[red] (v1) circle (0.1) node[below left] {A} ;
+    \fill (v2)  circle (0.1) node[below left] {B} ;
+    \fill (v3)  circle (0.1) node[below left] {C} ;
+    \fill (v4)  circle (0.1) node[below left] {D} ;
+    \fill (v5)  circle (0.1) node[below left] {E} ;
+    \fill (v6)  circle (0.1) node[below left] {F} ;
+    \fill (v7)  circle (0.1) node[below left] {G} ;
+    \fill (v8)  circle (0.1) node[below left] {H} ;
+    \fill (v9)  circle (0.1) node[below left] {I} ;
+    \fill (v10) circle (0.1) node[below left] {J} ;
+    \fill (v11) circle (0.1) node[below left] {K} ;
+    \fill (v12) circle (0.1) node[below left] {L} ;
+    \fill (v13) circle (0.1) node[below left] {M} ;
+    \fill (v14) circle (0.1) node[below left] {N} ;
+    \fill (v15) circle (0.1) node[below left] {O} ;
+    \fill[green] (v16) circle (0.1)  node[below left] {P} ;
+    \draw (v1)  edge node[left] {4} (v2)  ; 
+    \draw (v2)  edge node[left] {3} (v3)  ; 
+    \draw (v3)  edge node[left] {4} (v4)  ; 
+    \draw (v5)  edge node[left] {1} (v6)  ; 
+    \draw (v6)  edge node[left] {1} (v7)  ; 
+    \draw (v7)  edge node[left] {1} (v8)  ; 
+    \draw (v9)  edge node[left] {1} (v10) ; 
+    \draw (v10) edge node[left] {1} (v11) ; 
+    \draw (v11) edge node[left] {1} (v12) ; 
+    \draw (v13) edge node[left] {1} (v14) ; 
+    \draw (v14) edge node[left] {1} (v15) ; 
+    \draw (v15) edge node[left] {1} (v16) ; 
+    \draw (v1)  edge node[above] {1} (v5)  ; 
+    \draw (v5)  edge node[above] {7} (v9)  ; 
+    \draw (v9)  edge node[above] {1} (v13) ; 
+    \draw (v2)  edge node[above] {9} (v6)  ; 
+    \draw (v6)  edge node[above] {5} (v10) ; 
+    \draw (v10) edge node[above] {2} (v14) ; 
+    \draw (v3)  edge node[above] {4} (v7)  ; 
+    \draw (v7)  edge node[above] {9} (v11) ; 
+    \draw (v11) edge node[above] {5} (v15) ; 
+    \draw (v4)  edge node[above] {7} (v8)  ; 
+    \draw (v8)  edge node[above] {1} (v12) ; 
+    \draw (v12) edge node[above] {9} (v16) ; 
+\end{tikzpicture}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}
+   The table provides a function that defines an isomorphism between the graphs.\\
+   $\ $\\
+   $\ $\\
+   \begin{tabular}[h]{*{4} {c}}
+      \multirow{10}{*}{\graphA} & \multirow{10}{*}{\graphB} & \textbf{Left} & \textbf{Right} \\
+                                &                           &             1 & 6              \\
+                                &                           &             2 & 3              \\
+                                &                           &             3 & 5              \\
+                                &                           &             4 & 7              \\
+                                &                           &             5 & 4              \\
+                                &                           &             6 & 10             \\
+                                &                           &             7 & 2              \\
+                                &                           &             8 & 1              \\
+                                &                           &             9 & 8              \\
+                                &                           &            10 & 9              \\
+   \end{tabular}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+   The table provides a 3 coloring of the graph using the colors a, b, and c.\\
+   The chromatic number cannot be 2 because $C_5$ is a subgraph. \\
+   $\ $\\
+   $\ $\\
+   \begin{tabular}[h]{*{3} {c}}
+      \multirow{10}{*}{\graphA} & \textbf{Vertex} & \textbf{Color} \\
+                                &               1 & a              \\
+                                &               2 & c              \\
+                                &               3 & c              \\
+                                &               4 & b              \\
+                                &               5 & b              \\
+                                &               6 & b              \\
+                                &               7 & a              \\
+                                &               8 & b              \\
+                                &               9 & c              \\
+                                &              10 & a              \\
+   \end{tabular}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+   \house \hspace{3em} \cube \hspace{3em} \graphA \\
+   \begin{tabular}{*{4}{c}}
+      \toprule                                                                                  \\
+      \textbf{Graph} & \textbf{Edge List} & \textbf{Adjacency List} & \textbf{Adjacency Matrix} \\
+      \midrule                                                                                  \\
+      left           & \houseEdgeList     & \houseAdjList           & \houseAdjMatrix           \\
+      \midrule                                                                                  \\
+      middle         & \cubeEdgeList      & \cubeAdjList            & \cubeAdjMatrix            \\
+      \midrule                                                                                  \\
+      right          & \graphAEdgeList    & \graphAAdjList          & \graphAAdjMatrix          \\
+      \bottomrule
+   \end{tabular}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+   \begin{tabular}{*{6}{c}}
+      \toprule                                                                                                     \\
+                         & \textbf{Step 0} & \textbf{Step 1} & \textbf{Step 2} & \textbf{Step 3} & \textbf{Step 4} \\
+      \midrule                                                                                                     \\
+      \textbf{Operation} & Start           & Push(5)         & Pop             & Push(3)         & Pop             \\
+      \midrule                                                                                                     \\
+      \textbf{Heap}      & \Tree[.4 [.7 10 9 ] [.8 11 ] ]
+                         & \Tree[.4 [.7 10 9 ] [.5 11 8 ] ]
+                         & \Tree[.5 [.7 10 9 ] [.8 11 ] ]
+                         & \Tree[.3 [.7 10 9 ] [.5 11 8 ] ]
+                         & \Tree[.5 [.7 10 9 ] [.8 11 ] ]                                                          \\
+      \midrule                                                                                                     \\
+      \textbf{Array}     & $\begin{bmatrix} 4 \\ 7 \\ 8 \\ 10 \\ 9 \\ 11      \end{bmatrix}$
+                         & $\begin{bmatrix} 4 \\ 7 \\ 5 \\ 10 \\ 9 \\ 11 \\ 8 \end{bmatrix}$
+                         & $\begin{bmatrix} 5 \\ 7 \\ 8 \\ 10 \\ 9 \\ 11      \end{bmatrix}$
+                         & $\begin{bmatrix} 3 \\ 7 \\ 5 \\ 10 \\ 9 \\ 11 \\ 8 \end{bmatrix}$
+                         & $\begin{bmatrix} 5 \\ 7 \\ 8 \\ 10 \\ 9 \\ 11      \end{bmatrix}$                       \\
+      \bottomrule
+   \end{tabular}
+\end{homeworkProblem}
+
+\end{document}
