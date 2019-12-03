@@ -495,6 +495,48 @@
 \end{homeworkProblem}
 
 \begin{homeworkProblem}
+   Given the prolog program
+   \begin{verbatim}
+   p :- a, b, c.
+   a :- b, d.
+   a :- b, e.
+   b :- x.
+   b :- y.
+   c.
+   y.
+   d :- x.
+   e.
+   \end{verbatim} 
+   Use SLD resolution to evaluate the query
+   \begin{verbatim}
+   ?- p.
+   GS = p 
+   GS = a, b, c 
+   GS = ?<(b, d), (b, e)>, b, c 
+   GS = b, d, ?<b, e>, b, c 
+   GS = ?<x, y>, d, ?<b, e>, b, c 
+   GS = x, ?<y>, d, ?<b, e>, b, c 
+   GS = fail, ?<y>, d, ?<b, e>, b, c 
+   GS = ?<y>, d, ?<b, e>, b, c 
+   GS = y, d, ?<b, e>, b, c 
+   GS = d, ?<b, e>, b, c 
+   GS = x, ?<b, e>, b, c 
+   GS = fail, ?<b, e>, b, c 
+   GS = b, ?<e>, b, c 
+   GS = y, ?<e>, b, c 
+   GS = ?<e>, b, c 
+   GS = e, b, c 
+   GS = b, c 
+   GS = ?<x, y>, c 
+   GS = x, ?<y>, c 
+   GS = fail, ?<y>, c 
+   GS = ?<y>, c 
+   GS = y, c 
+   GS = c 
+   \end{verbatim}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
    \house \hspace{3em} \cube \hspace{3em} \graphA \\
    \begin{tabular}{*{4}{c}}
       \toprule                                                                                  \\
@@ -529,6 +571,60 @@
                          & $\begin{bmatrix} 5 \\ 7 \\ 8 \\ 10 \\ 9 \\ 11      \end{bmatrix}$                       \\
       \bottomrule
    \end{tabular}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+   Prove that if a graph contains no odd cycles, then it is bipartite. \\\\
+   Consider a graph $G$ containing only even cycles with edges $E$ and vertices $V$.
+   Choose an arbitrary vertex $v \in V$. Create a partition of the vertices by
+   first, constructing the shortest path between each vertex and $v$. The vertices
+   with even length paths go into $E$ and the rest go into $O$. Vertex $v$ goes into
+   $E$. Assume that this partition is not a bipartition, that $o_1, o_2 \in O$ and
+   $(o_1, o_2) \in E$. Take the shortest paths from $o_1$ to $v$ and $o_2$ to $v$,
+   and call these $Q$ and $L$. $Q$ and $L$ must merge at some vertex, $v_1$ (could be
+   same as $v$). The paths from $o_1$ and $o_2$ to $v_1$ will be called $Q_1$ and $L_1$.
+   Because $Q$ and $L$ are both odd length, and the same portion was removed from each
+   to create $L_1$ and $Q_1$, these new paths must be the same parity. This results
+   in the cycle: $o_1, v_1, o_2, o_1$, which is of odd length, hence contradicting
+   the assumption. The partition must be a bipartition. The same can be done for
+   two vertices in $E$.
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+   Prove that if a graph has a Eulerian circuit, then all of the vertices have even degree. \\\\
+   Consider a graph $G$ with a Eulerian circuit. Traverse the circuit and count
+   how many times each vertex is visited. Every time a vertex is visited, one edge
+   is used to enter the vertex and one edge is used to leave the vertex. As a result,
+   every vertex except the starting vertex has a degree of $2n$, with $n$ being the number
+   of visits. The starting vertex has degree of twice the number of visits minus two (not
+   counting start and finish as visits). $2x - 2$ is an even number.
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+   Prove Euler's formula for connected planar graphs, $V-E+F=2$. \\\\
+   Base case: Graph has only a single vertex. $1-0+1=2$ \\
+   Inductive hypothesis: $V-E+F=2$ works on all graphs with $n$ edges. \\
+   Inductive case 1: The graph is a tree. Remove one of the terminal vertices
+   (with only one edge) and its edge. In the process, you have removed one vertex
+   and one edge. The new equation is $(v-1)-(n-1)+f=2$ which is the same as $V-E+F=2$. \\
+   Inductive case 2: The graph has a cycle. Remove an edge on a cycle. Because this
+   edge was part of a cycle, its removal results in the combining of two faces resulting
+   in the loss of a single face. The new equation is $v-(n-1)+(f-1)=2$ which is the same
+   as $V-E+F=2$.
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+   
+   Run depth first search, breadth first search, and Dijkstra's on the following graph.\\
+   When picking which vertex to look at next, pick the next vertex alphabetically.\\
+   \grid \\
+   Breadth first results in the neighborhoods: \\
+   $ A \to B, E \to C, F, I \to D, G, J, M \to H, K, N \to L, O \to P $ \\
+   Depth first (alphabetically) visits the vertices: \\
+   $ A \to B \to C \to D \to H \to G \to F \to E \to I \to J \to K \to L \to P $ \\
+   Dijkstra's results in the path: \\
+   $ A \to E \to F \to J \to N \to O \to P $ \\
+   With a total length of $11$.
 \end{homeworkProblem}
 
 \end{document}
